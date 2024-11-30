@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Orders Return</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <style>
+    .bg-yellow {
+      background-color: #ffa500 !important;
+    }
+    .btn-yellow {
+      background-color: #ffa500 !important;
+      border-color: #ffa500 !important;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-6">
+      <div class="card">
+        <div class="card-header bg-yellow">
+          <h3 class="card-title mb-0">Orders Return</h3>
+        </div>
+        <div class="card-body">
+          <form method="post">
+             {% csrf_token %}
+            <div class="mb-3">
+              <label for="productName" class="form-label">Product Name</label>
+              <input type="text" class="form-control" id="productName" name="pname" placeholder="Enter product name" required>
+            </div>
+            <div class="mb-3">
+              <label for="phoneNumber" class="form-label">Phone Number</label>
+              <input type="tel" class="form-control" id="phoneNumber" name="cphone" placeholder="Enter phone number" required>
+            </div>
+            <div class="mb-3">
+              <label for="address" class="form-label">Address</label>
+              <textarea class="form-control" id="address" rows="3" name="caddress" placeholder="Enter address" required></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="dateOfPurchase" class="form-label">Date of Purchase</label>
+              <input type="date" class="form-control" name="dop" id="dateOfPurchase" required>
+            </div>
+            <button type="submit" class="btn btn-yellow">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Bootstrap Bundle with Popper -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

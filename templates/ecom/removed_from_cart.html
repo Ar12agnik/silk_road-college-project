@@ -1,0 +1,59 @@
+{% extends 'ecom/navbar.html' %}
+{% load static %}
+{% block content %}
+
+<head>
+    <!-- Include Bootstrap CSS and JS -->
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css" rel="stylesheet" />
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            width: 100%;
+            height: 100%;
+            background-color: white;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        /*root variable */
+
+        :root {
+            --backgroud: white;
+
+
+        }
+
+        .main-box {
+            width: 100%;
+            height: 100vh;
+            text-align: center;
+        }
+        .center{
+            display: inline-block;
+        }
+    </style>
+</head>
+
+<br><br><br><br>
+<div class="main-box">
+    <div class="center">
+        Item removed From cart!<br>
+    <button class="btn btn-success btn-lg"><a href="{% url 'cart' %}" style="text-decoration: none; color: white;">Go to Cart</a>
+</button>
+        </div>
+
+    <br><br><br>
+
+</div>
+
+{% include "ecom/footer.html" %}
+
+{% endblock content %}

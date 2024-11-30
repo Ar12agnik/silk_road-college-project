@@ -1,0 +1,209 @@
+{% extends 'ecom/admin_base.html' %}
+{% load static %}
+{% block content %}
+
+
+<head>
+  <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      width: 100%;
+      height: 100%;
+      background-color: var(--background);
+
+    }
+
+    /*Color Variable*/
+
+    :root {
+      --background: #94a3b8;
+      --nav-color: #334155;
+
+    }
+
+    a:link {
+      text-decoration: none;
+    }
+
+    h6 {
+      text-align: center;
+    }
+
+    .row {
+      margin: 100px;
+    }
+
+    .float {
+      position: fixed;
+      width: 50px;
+      height: 50px;
+      bottom: 50px;
+      right: 50px;
+      background-color: #3eb54d;
+      color: #FFF;
+      border-radius: 50px;
+      text-align: center;
+      box-shadow: 5px 5px 5px #505050;
+    }
+
+    .float i {
+      font-size: 2rem;
+    }
+
+    .my-float {
+      margin-top: 22px;
+    }
+
+    
+
+    .panel-heading {
+      background-color: var(--nav-color);
+      color: white;
+      text-align: center;
+      padding: 20px;
+
+    }
+
+    .panel-heading h6 {
+      font-size: 2rem;
+      font-weight:lighter;
+    }
+
+    .edit-btn {
+      text-decoration: none;
+      font-size: 2rem;
+      color: green;
+    }
+
+    .del-btn {
+      text-decoration: none;
+      font-size: 2rem;
+      color: red;
+
+    }
+
+    /*Mobile Responsive*/
+    @media only screen and (max-width:1000px) {
+      .main-box {
+        margin: 0px;
+      }
+
+      .panel-heading h6 {
+        font-size: 3rem;
+      }
+
+      .table {
+        font-size: 2.2rem;
+
+      }
+
+      img {
+        width: 100px;
+        height: 100px;
+      }
+
+      .edit-btn {
+        text-decoration: none;
+        font-size: 5.5rem;
+        color: green;
+        margin: 20px;
+        margin-bottom: 20px;
+      }
+
+      .del-btn {
+        text-decoration: none;
+        font-size: 5.5rem;
+        color: red;
+        margin: 20px;
+        margin-top: 20px;
+
+      }
+
+      .float {
+        position: fixed;
+        width: 100px;
+        height: 100px;
+        bottom: 50px;
+        right: 50px;
+        background-color: #3eb54d;
+        color: #FFF;
+        border-radius: 50px;
+        text-align: center;
+        box-shadow: 5px 5px 5px #505050;
+      }
+
+      .float i {
+        font-size: 5.2rem;
+      }
+    }
+  </style>
+</head>
+
+
+
+<div class="main-box">
+  <div class="panel panel-default">
+    <div class="panel-heading bg-dark">
+      <h6 class="panel-title text-light">TOTAL PRODUCTS</h6>
+    </div>
+    <div class="panel-body">
+      {% if products %}
+      <div class="table-responsive">
+        <table class="table table-striped table-hover">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Quantity left</th>
+              <th>Image</th>
+              <th>Price</th>
+              <th>Description</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for p in products %}
+            <tr>
+              <td>{{ p.name }}</td>
+              <td>{{ p.quantity }}</td>
+              <td><img src="{% static p.product_image.url %}" alt="Product Image" width="100" height="100"></td>
+              <td>{{ p.price }}₹</td>
+             <td>{{p.description}}</td>
+              <td>
+                <a class="text-success edit-btn" href="{% url 'update-product' p.id  %}">
+                  <span class="glyphicon glyphicon-edit"></span>
+                </a>
+                <a class="text-danger del-btn" href="{% url 'delete-product' p.id  %}">
+                  <span class="glyphicon glyphicon-trash"></span>
+                </a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <div class="alert alert-warning" role="alert">
+        <strong>No Products!</strong> There are currently no products available.
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<!-- add product floating button -->
+<a href="/admin-add-product" class="float">
+  <i class="fa fa-plus my-float"></i>
+</a>
+<!--
+developed By : sumit kumar
+-->
+{% endblock content %}

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+  <meta name="description" content="">
+  <title>Admin Panel</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css" rel="stylesheet" />
+
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      width: 100%;
+      height: 100%;
+      background-color: var(--background);
+
+    }
+
+    /*Color Variable*/
+
+    :root {
+      --background: #94a3b8;
+      --maincolor: #4ade80;
+      --text-color: #16a34a;
+      --nav-color: #334155;
+
+
+    }
+
+    /*Admin-nav start*/
+    .nav {
+      display: flex;
+      background-color: var(--nav-color);
+      font-family: 'Poppins', sans-serif;
+
+    }
+
+    .nav-right .ul {
+      display: flex;
+      justify-content: center;
+      margin-top: 10px;
+    }
+
+    .nav-right .ul a {
+      text-decoration: none;
+      color: white;
+    }
+
+    /*Admin-nav end*/
+
+    .bs-example {
+      margin: 0px;
+
+    }
+
+    .navbar-brand {
+      font-size: 20px;
+      font-family: sans-serif;
+
+    }
+
+    /*Mobile responsive*/
+    @media only screen and (max-width:1000px) {
+      .nav {
+        padding: 30px;
+        font-size: 2.8rem;
+      }
+
+      .nav .nav-left a {
+        font-size: 6rem;
+        margin: 20px;
+
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+
+
+
+  <nav class="nav">
+    <div class="nav-left">
+      <a href="/" class="navbar-brand" style="font-family: 'Poppins', sans-serif; color: white;"><i
+          class="ri-user-settings-fill"></i>
+        Admin Panel</a>
+    </div>
+
+    <div class="nav-right">
+      <ul class="ul">
+        <a href="/view-customer" class="nav-item nav-link"><i class="ri-group-2-fill"></i> Customers</a>
+        <a href="/admin-view-booking" class="nav-item nav-link"><i class="ri-bar-chart-grouped-fill"></i> View
+          Orders</a>
+        <a href="/admin-products" class="nav-item nav-link"><i class="ri-edit-box-fill"></i> Manage Products</a>
+        <!-- <a href="/view-feedback" class="nav-item nav-link">Feedback</a> -->
+        <a href="/logout" class="nav-item nav-link"><i class="ri-logout-circle-r-line"></i> Logout</a>
+      </ul>
+    </div>
+
+
+  </nav>
+
+
+  <!-- content start-->
+  {% block content %}
+
+  {% endblock content %}
+  <!-- content end-->
+ 
+  <!-- <footer>
+    <p>
+      <a id="ftr" href="#" class="fa fa-facebook"></a>
+      <a id="ftr" href="#" class="fa fa-whatsapp"></a>
+      <a id="ftr" href="#" class="fa fa-instagram"></a>
+      <a id="ftr" href="#" class="fa fa-twitter"></a>
+    </p>
+
+    <br>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 col-sm-12">
+          <div style="color:#ffffff;" class="wow fadeInUp footer-copyright">
+            <p>
+              Copyright &copy; 2022 Developed by Sumit Kumar </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer> -->
+  <!--
+  developed By : sumit kumar
+  -->
+</body>
+
+</html>

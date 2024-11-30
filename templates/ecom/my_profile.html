@@ -1,0 +1,165 @@
+{% extends 'ecom/customer_navbar.html' %}
+{% load static %}
+{% block content %}
+
+
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    width: 100%;
+    height: 100%;
+
+  }
+
+  /*Color Variable*/
+
+  :root {
+    --backgroud: white;
+
+
+  }
+
+
+  .card {
+    width: 60vw;
+    background-color: #efefef;
+    border: none;
+    cursor: pointer;
+    transition: all 0.5s;
+  }
+
+
+
+
+
+  .name {
+    font-size: 22px;
+    font-weight: bold
+  }
+
+  .idd {
+    font-size: 14px;
+    font-weight: 600
+  }
+
+  .idd1 {
+    font-size: 12px
+  }
+
+  .number {
+    font-size: 22px;
+    font-weight: bold
+  }
+
+
+
+  .btn1 {
+    height: 40px;
+    width: 150px;
+    border: none;
+    background-color: #000;
+    color: #aeaeae;
+    font-size: 15px
+  }
+
+  .text span {
+    font-size: 13px;
+    color: #545454;
+    font-weight: 500
+  }
+
+  .icons i {
+    font-size: 19px
+  }
+
+  hr .new1 {
+    border: 1px solid
+  }
+
+
+
+  .date {
+    background-color: #ccc;
+  }
+
+  p {
+    font-size: 1.3rem;
+  }
+
+  .main-box {
+    width: 100%;
+    height: 100%;
+  }
+</style>
+<!-- <br><br><br>
+<div style="padding-left:300px;" class="container">
+
+  <div class=" col-md-2">
+    <img src="{% static customer.profile_pic.url %}" alt="profile pic" class="img-rounded img-responsive" />
+  </div>
+  <div class="col-sm-4 col-md-4">
+    <blockquote>
+      <p>Username: {{request.user}}</p> <small><cite title="Source Title">Address: {{customer.address}} <i
+            class="glyphicon glyphicon-map-marker"></i></cite></small>
+    </blockquote>
+    <p><i class="glyphicon glyphicon-phone"></i>Contact: {{customer.mobile}}
+    </p>
+  </div>
+
+</div>
+<br>
+<div style="text-align: center;">
+  <a href="/edit-profile"><button class="btn btn-primary btn-lg"><span>Edit Profile </span></button></a>
+</div> -->
+<div class="main-box">
+  <div class="container mt-4 mb-4 p-3 d-flex justify-content-center">
+    <div class="card p-4"
+      style="background-color: white; box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;">
+      <div class=" image d-flex flex-column justify-content-left ">
+        </span> <span class="idd" style="text-transform: lowercase;">@{{request.user}}</span>
+        <div class="d-flex flex-row justify-content-left mx-3 gap-2"> <span class="idd1">Joined at <i
+              class="ri-calendar-schedule-fill"></i></span>
+
+
+        </div>
+        <div class="txt" style="margin-top: 2%;">
+          <h1>Terms and Conditions</h1>
+          <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Commodi fugiat, repellendus porro reprehenderit
+            cupiditate blanditiis placeat recusandae debitis! Sit, et?Lorem ipsum dolor sit amet consectetur adipisicing
+            elit. Fugit nemo sit, saepe sequi voluptatibus nihil nesciunt obcaecati commodi consequatur quasi! Lorem
+            ipsum
+            dolor sit amet consectetur adipisicing elit. Dolor natus perspiciatis atque corrupti rerum molestias
+            repellendus quibusdam, facere sint illo itaque delectus culpa ex labore maiores sed possimus eos incidunt
+            consequatur neque animi obcaecati doloribus eius inventore. Sit voluptate exercitationem numquam facere
+            deleniti distinctio corrupti porro quibusdam sequi id, magnam aut nemo officia ut magni amet vero, dolorum
+            modi molestias nesciunt expedita cupiditate! Magnam dolores a iure inventore sint adipisci animi ipsa nulla
+            quisquam molestias esse, similique molestiae veniam commodi officiis cumque rem libero? Placeat tenetur
+            amet,
+            vero delectus ipsam in aliquam eaque maxime exercitationem doloremque, rem nemo, ipsa dolore!</p>
+          <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. A necessitatibus qui nobis fugiat hic! Soluta
+            perspiciatis odit, eligendi qui sed provident eius odio. Corrupti itaque quas sint voluptas ea illo earum
+            praesentium. Non praesentium dolorem quas deleniti explicabo, ipsam reiciendis!</p>
+        </div>
+
+
+
+
+
+
+
+      </div>
+    </div>
+  </div>
+</div>
+{% include "ecom/footer.html" %}
+
+
+
+{% endblock content %}
