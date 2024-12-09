@@ -21,6 +21,9 @@
             -webkit-box-sizing: border-box;
             box-sizing: border-box;
         }
+        .cart-table-background{
+            background-image: linear-gradient(to top, #1ad809c7,#0faa01, #52f543);
+        }
 
         /*root variable */
 
@@ -130,10 +133,13 @@
     </style>
 </head>
 <div class="main-box">
+    
+    
+        
     <div class="table-box">
         <div class="panel"
             style=" box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;">
-            <div class="panel-heading" style="background-color: orange;">
+            <div class="panel-heading cart-table-background">
                 <h6>My
                     Cart
                     <i class="ri-shopping-cart-2-fill"></i>
@@ -186,7 +192,7 @@
 
     <br><br><br>
     <div style="text-align: center;">
-        <span style="" class="total">Total ${{ total }}</span>
+        <span style="" class="total">Total ₹ {{ total }}</span>
         <br> <br>
         <a href="/customer-address">
             <button class="btn btn-success btn-lg"><span>Purchase <i class="ri-shopping-bag-fill"></i></span></button>
