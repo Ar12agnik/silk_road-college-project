@@ -245,16 +245,7 @@ def view_feedback_view(request):
 # ---------------------------------------------------------------------------------
 # ------------------------ PUBLIC CUSTOMER RELATED VIEWS START ---------------------
 # ---------------------------------------------------------------------------------
-# def_load=5
-# def load_more(request):
-#
-#     def_load=settings.DEFAULT_NO_OF_PRODS
-#     def_load+=5
-#     print(def_load)
-#     if request.user.is_authenticated:
-#         return customer_home_view(request,def_load)
-#     else:
-#         return home_view(request,def_load)
+
 
 
 
@@ -283,6 +274,15 @@ def search_view(request):
                   {'products': products, 'word': word, 'product_count_in_cart': product_count_in_cart})
 
 
+#show product discription
+def product_detail(request,pk):
+    try:
+        product= Product.objects.get(id=pk)
+        return render(request,'ecom/product_detail.html',{'products':product})
+    except Exception as e:
+        print(e)
+        return render(request,'ecom/oops_page.html')
+        
 # any one can add product to cart, no need of signin
 def add_to_cart_view(request, pk):
     products = models.Product.objects.all()

@@ -427,10 +427,12 @@
     <div class="row">
       {% for p in products %}
       <div class="col-md-6 mb-4">
+        <a href="{% url 'product detailes' p.id %}" style="text-decoration: none; color: inherit;">
         <div class="card">
           <img src="{% static p.product_image.url %}" class="product-image" alt="{{ p.name }}">
           <div class="card-body text-center">
-            <h5 class="product-title">{{ p.name }}</h5>
+            
+              <h5 class="product-title">{{ p.name }}</h5>
             <p class="product-description">{{ p.description }}</p>
             <p class="price">₹ {{ p.price }}</p>
             <button type="button" class="btn btn-green">
@@ -438,6 +440,7 @@
             </button>
           </div>
         </div>
+      </a>
       </div>
       {% endfor %}
     </div>

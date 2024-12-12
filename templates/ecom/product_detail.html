@@ -1,0 +1,45 @@
+{% extends "ecom/homebase.html" %}
+{% block content %}
+{% load static %}
+<div style="max-width: 1200px; margin: 20px auto; font-family: Arial, sans-serif; padding: 20px;">
+    <h1 style="font-size: 2rem; color: #333; margin-bottom: 20px;">{{ products.name }}</h1>
+    <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+        <div style="flex: 1; min-width: 300px;">
+            <img src="{% static products.product_image.url %}" alt="{{ products.name }}" 
+                 style="width: 100%; border-radius: 5px; border: 1px solid #ccc;">
+        </div>
+        <div style="flex: 2; min-width: 300px;">
+            <h2 style="font-size: 1.5rem; color: #555;">₹{{ products.price }}</h2>
+            <p style="font-size: 1rem; color: #666; line-height: 1.5; margin: 10px 0;">
+                {{ products.description }}
+            </p>
+            <ul style="list-style-type: disc; padding-left: 20px; margin: 20px 0;">
+                <li style="margin-bottom: 5px;">Brand: {{ products.brand }}</li>
+                <li style="margin-bottom: 5px;">Category: {{ products.category }}</li>
+                <li style="margin-bottom: 5px;">Availability: {{ products.stock }} in stock</li>
+                <li>Free shipping</li>
+            </ul>
+            <a href="{% url 'add-to-cart' products.id %}" 
+               style="display: inline-block; padding: 10px 20px; background-color: #28a745; color: white; font-size: 1rem; text-decoration: none; border-radius: 5px; cursor: pointer;">
+                Add to Cart
+            </a>
+        </div>
+    </div>
+    <div style="margin-top: 40px;">
+        <h3 style="font-size: 1.5rem; color: #333; margin-bottom: 10px;">Product Specifications</h3>
+        <table style="width: 100%; border-collapse: collapse; margin-top: 10px; text-align: left;">
+            <tr style="background-color: #f1f1f1;">
+                <th style="padding: 10px; border: 1px solid #ddd;">Specification</th>
+                <th style="padding: 10px; border: 1px solid #ddd;">Details</th>
+            </tr>
+            {% comment %} {% for spec, value in products.specifications.items %}
+            <tr>
+                <td style="padding: 10px; border: 1px solid #ddd;">{{ spec }}</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">{{ value }}</td>
+            </tr>
+            {% endfor %} {% endcomment %}
+        </table>
+    </div>
+</div>
+
+{% endblock content %}
