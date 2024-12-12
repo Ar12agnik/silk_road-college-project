@@ -523,6 +523,12 @@ def customer_address_view(request):
     return render(request, 'ecom/customer_address.html',
                   {'addressForm': addressForm, 'product_in_cart': product_in_cart,
                    'product_count_in_cart': product_count_in_cart})
+def buy_now(request,pk):
+    response = redirect('customer-address')
+    response.set_cookie('product_ids', pk)
+    quantity=f"{pk} + {1}"
+    response.set_cookie("quantity", quantity)
+    return response
 
 
 # here we are just directing to this view...actually we have to check whther payment is successful or not
