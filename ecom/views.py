@@ -7,8 +7,8 @@ from django.contrib.auth.models import Group, User
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 from django.conf import settings
+from django.contrib.auth import authenticate, login, logout
 import random
-
 
 def home_view(request,):
     products = models.Product.objects.all()
@@ -61,10 +61,10 @@ def customer_signup_view(request):
             message = ("Welcome to SreeGuruBhander We're excited to see you here!! check out our Latest offers click "
                        "here(domain_name.com)\n please Do not reply to this mail!")
             send_mail("Greetings!" + str(name), message, settings.EMAIL_HOST_USER, [str(EMAIL_RECEIVING_USER)],
-                      fail_silently=False)
+                      fail_silently=True)
             message = f"A {name} Just with email adress {EMAIL_RECEIVING_USER} Registered in your website "
             send_mail("Greetings! Admin", message, settings.EMAIL_HOST_USER, settings.EMAIL_RECEIVING_USER,
-                      fail_silently=False)
+                      fail_silently=True)
         return HttpResponseRedirect('customerlogin')
     return render(request, 'ecom/customersignup.html', context=mydict)
 
@@ -330,6 +330,10 @@ def add_to_cart_view(request, pk):
 
 # for checkout of cart
 def cart_view(request):
+    if request.user.is_authenticated:
+        auth=True
+    else:
+        auth=False
     quantity_html = []
     total = 0
     already_added_prods = []
@@ -382,7 +386,7 @@ def cart_view(request):
         'products': products,
         'total': total,
         'product_count_in_cart': product_count_in_cart,
-        'quantity': quantity_html
+        'quantity': quantity_html,'auth':auth
     })
 
 def remove_from_cart_view(request, pk):
@@ -506,7 +510,8 @@ def customer_address_view(request):
                         for q in quantity_id_in_cart:
                             q=q.split("+")
                             if int(q[0]) == int(p.id):
-                                total = total + p.price*int(q[1])
+                                if len(q) > 1:
+                                    total = total + p.price*int(q[1])
 
             response = redirect("/pay_now")#render(request, 'ecom/payment.html', {'total': total})
             response.set_cookie('email', email)
@@ -572,28 +577,31 @@ def payment_success_view(request):
     for product in products:
         for quantity in quantity_in_cart:
             quantity = quantity.split("+")
-
+            if len(quantity)==2:
+                qty=int(quantity[1])
+            else:
+                continue
             if product.id == int(quantity[0]):
                 models.Orders.objects.get_or_create(customer=customer, product=product, status='Pending', email=email,
-                                                    mobile=mobile, address=address, quantity=int(quantity[1]),razorpay_payment_id=razorpay_payment_id,razorpay_order_id=razorpay_order_id,razorpay_signature=razorpay_signature)
+                                                    mobile=mobile, address=address, quantity=qty,razorpay_payment_id=razorpay_payment_id,razorpay_order_id=razorpay_order_id,razorpay_signature=razorpay_signature)
                 if (product.quantity - int(quantity[1])) >= 0:
                     product.quantity = product.quantity - int(quantity[1])
                     product.save()
                     p_n += f"{product.name} "
                     if product.quantity<2:
                         send_mail(f"product {product.name} is out of Stalk!!",
-                                  f"Dear Admin,\n your product named {product.name} has alarmingly Low Quantity!! Please refill it! \nProduct name: {product.name}\n Product id: {product.id}\n Product Description: {product.description}\nPrice: {product.price}",settings.EMAIL_HOST_USER,settings.EMAIL_RECEIVING_USER,fail_silently=False)
+                                  f"Dear Admin,\n your product named {product.name} has alarmingly Low Quantity!! Please refill it! \nProduct name: {product.name}\n Product id: {product.id}\n Product Description: {product.description}\nPrice: {product.price}",settings.EMAIL_HOST_USER,settings.EMAIL_RECEIVING_USER,fail_silently=True)
 
 
                 else:
                     send_mail(f"{product.name} is Currently out of stalk",
-                              f"Sorry but your Shipment of the product {product.name} might get delayed due to lack of stalk\n we are trying Our best to bring the product to stalk at earliest!! \n The rest of the products will reach you in Time! For any doubts/quearies please contact {settings.EMAIL_HOST_USER} or the Mobile Number {settings.MOBILE}",settings.EMAIL_HOST_USER, [email,], fail_silently=False)
+                              f"Sorry but your Shipment of the product {product.name} might get delayed due to lack of stalk\n we are trying Our best to bring the product to stalk at earliest!! \n The rest of the products will reach you in Time! For any doubts/quearies please contact {settings.EMAIL_HOST_USER} or the Mobile Number {settings.MOBILE}",settings.EMAIL_HOST_USER, [email,], fail_silently=True)
                     checker+=1
-                    send_mail(f"product {product.name} is out of Stalk!!",f"Dear Admin,\n your product named {product.name} is out of stalk \nProduct name: {product.name}\n Product id: {product.id}\n Product Description: {product.description}\nPrice: {product.price}",settings.EMAIL_HOST_USER,settings.EMAIL_RECEIVING_USER,fail_silently=False)
+                    send_mail(f"product {product.name} is out of Stalk!!",f"Dear Admin,\n your product named {product.name} is out of stalk \nProduct name: {product.name}\n Product id: {product.id}\n Product Description: {product.description}\nPrice: {product.price}",settings.EMAIL_HOST_USER,settings.EMAIL_RECEIVING_USER,fail_silently=True)
     if checker == 0:
         send_mail(f"Order Placed!!",
                   f"Your order for {p_n} is successfully Placed!\n Thankyou for shopping With Us! \n click here -> domainname.com to get more offers!!",
-                  settings.EMAIL_HOST_USER,[email,], fail_silently=False)
+                  settings.EMAIL_HOST_USER,[email,], fail_silently=True)
         checker += 1
 
     # after order placed cookies should be deleted
@@ -719,6 +727,9 @@ def contactus_view(request):
             name = sub.cleaned_data['Name']
             message = sub.cleaned_data['Message']
             send_mail(str(name) + ' || ' + str(email), message, settings.EMAIL_HOST_USER, settings.EMAIL_RECEIVING_USER,
-                      fail_silently=False)
+                      fail_silently=True)
             return render(request, 'ecom/contactussuccess.html')
     return render(request, 'ecom/contactus.html', {'form': sub})
+def log_out(request):
+    logout(request)
+    return redirect('home')
