@@ -19,14 +19,17 @@
             font-family: 'Poppins', sans-serif;
             width: 100%;
             height: 100%;
-            background-color: white;
+            background-color: rgb(218, 180, 180);
         }
 
         /*Color Variable*/
 
         :root {
-            --backgroud: white;
-
+            --backgroud: rgb(180, 224, 18);
+        
+        }
+        .navbar{
+            background-image: linear-gradient(#18181b,#3f3f46);
         }
 
         /*Mobile Responsive*/
@@ -42,25 +45,25 @@
 
 <body>
     {% load static %}
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <nav class="navbar navbar-expand-lg"style="background-color:var(--background)">
         <div class="container-fluid">
             <a class="navbar-brand" href="{%url 'home' %}" style="font-size: 1.3rem;"><img src="{% static 'images/logo.png' %}" alt=""></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="auto"
                 aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse nav" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="{%url 'home' %}"><i
+                        <a class="nav-link active text-success" aria-current="page" href="{%url 'home' %}"><i
                                 class="ri-home-8-line"></i> Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" disabled>Orders return <i class="ri-arrow-right-up-line"></i></a>
+                        <a class="nav-link text-success " href="#" disabled>Orders return <i class="ri-arrow-right-up-line"></i></a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-dark" href="#" role="button" data-bs-toggle="dropdown"
+                        <a class="nav-link text-success dropdown-toggle " href="#" role="button" data-bs-toggle="dropdown"
                             aria-expanded="false">
                             Menu
                         </a>
@@ -79,14 +82,13 @@
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" href="/cart" aria-disabled="true"><i
-                                class="ri-shopping-cart-line"></i>{{ product_count_in_cart }}</a>
+                        <a class="nav-link text-success" href="/cart" aria-disabled="true"><i class="ri-shopping-cart-2-line"></i>  {{ product_count_in_cart }}</a>
                     </li>
                 </ul>
                 <form class="d-flex my-1 mb-0" role="search" action="/search" get="get">
                     <input class="form-control rounded-0 me-0" type="search" placeholder="Search Products"
                         aria-label="Search" name="query" id="query">
-                    <button class="btn rounded-0 text-light" type="submit" style="background-image: linear-gradient(to top, #1ad809c7,#0faa01, #52f543);"><i class="ri-search-line"></i></button>
+                    <button class="btn rounded-0 text-light" type="submit" style="background-image: linear-gradient(to top, #14532d,#047857);"><i class="ri-search-line"></i></button>
                 </form>
             </div>
         </div>
