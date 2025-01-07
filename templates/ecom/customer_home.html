@@ -1,340 +1,4 @@
-{% extends 'ecom/customer_navbar.html' %}
-{% comment %} {% load static %}
-{% block content %}
-
-{%if products%}
-<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
-
-  body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Poppins', sans-serif;
-    width: 100%;
-    height: 100%;
-    background-color: var(--backgroud);
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-
-  }
-
-  /*root variable */
-
-  :root {
-    --backgroud: white;
-
-
-  }
-
-  /*Hero-slider-start*/
-
-  h1 {
-    font-size: 2rem;
-    margin-bottom: 12px;
-  }
-
-  p {
-    font-size: 1em;
-  }
-
-
-
-
-
-  .btn:hover {
-    background: black;
-    color: white;
-    border: 1px solid #fff;
-  }
-
-  /* ========== .hero background... ========== */
-  .hero {
-    color: white;
-
-    background-color: #558;
-    background-image: url(https://source.unsplash.com/640x360?0);
-    background-size: cover;
-    background-position: center;
-    margin-bottom: 50px;
-    margin-top: 0px;
-
-
-
-    /* https://cubic-bezier.com/#0,0,0,1 */
-    animation: slides calc(4 * 5s) cubic-bezier(0, 0, 0, 3) 5s infinite;
-    /* animation: name duration timing-function delay iteration-count direction fill-mode; */
-    animation-play-state: running;
-  }
-
-  @keyframes slides {
-    25% {
-      background-image: url(https://source.unsplash.com/640x360?0);
-    }
-
-    50% {
-      background-image: url(https://source.unsplash.com/640x360?1);
-    }
-
-    75% {
-      background-image: url(https://source.unsplash.com/640x360?2);
-    }
-  }
-
-  /* ========== .hero background. ========== */
-
-  .hero .content-hero {
-    aspect-ratio: 16/9;
-    text-align: center;
-    background-color: #0008;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 10vw;
-    height: 20vh;
-    width: 100%;
-  }
-  .para{
-    font-size: 13px;
-  }
-
-  /*Hero-slider-end*/
-
-
-  /*Mobile responsiv - Hero section*/
-  @media only screen and (max-width:1000px) {
-
-    .hero .content-hero {
-      height: 50vh;
-    }
-
-    h1 {
-      font-size: 4rem;
-      margin-bottom: 12px;
-    }
-
-    h1 i {
-      font-size: 4rem;
-    }
-
-    .content-hero p {
-      font-size: 1.8rem;
-      width: 100%;
-      padding: 0px;
-    }
-
-    .section {
-      width: 100vw;
-      padding: 1%;
-    }
-
-    .caption {
-      font-size: 1.8rem;
-      width: 50vw;
-
-    }
-
-    .caption-btn {
-      width: 20vw;
-      padding-left: 5%;
-      padding-top: 2%;
-      font-size: 2.2rem;
-    }
-
-
-
-
-
-
-  }
-
-
-
-  /*Mobile Responsive*/
-  @media only screen and (max-width:1000px) {
-    * {
-      font-size: 1.5rem;
-    }
-
-    .caption {
-      width: 100%;
-    }
-
-    h5 {
-      font-size: 2rem;
-    }
-
-    p {
-      font-size: 2rem;
-    }
-
-    .main-product-box {
-      margin: 50px;
-    }
-
-    .disable {
-      display: none;
-    }
-
-    .desc {
-      font-size: 1rem;
-    }
-    .para{
-      font-size: 1rem;
-    }
-
-    .price {
-      font-size: 1.8rem;
-    }
-
-    .btn-green {
-      width: 30vw;
-      margin-left: 15%;
-    }
-
-    .btn a {
-      font-size: 1.5rem;
-    }
-    .ooo{font-size:2rem;}
-
-
-
-  }
-</style>
-<h4 style="text-align:center; color:#3E454C;">{{word}}</h4>
-
-<!-- products data start -->
-<!-- Hero-slider-start  -->
-<section class="hero">
-  <link rel="preload" as="image" href="https://source.unsplash.com/640x360?0" />
-  <link rel="preload" as="image" href="https://source.unsplash.com/640x360?1" />
-  <link rel="preload" as="image" href="https://source.unsplash.com/640x360?2" />
-
-  <div class="content-hero">
-    <h5 class="ooo">Welcome {{request.user}} now your are one of the customer of our shop. <br>Explore new products and don't forget
-      to
-      give us feedback : )</h5>
-  </div>
-</section>
-<!-- Hero-slider-end  -->
-
-<section>
-  {% for p in products %}
-
-  <div class="main-product-box py-2">
-    <div class="row justify-content-center">
-      <div class="col-md-12 col-xl-10">
-        <div class="card shadow-0 border" style="border-radius: 30px;  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;">
-          <div class="card-body">
-            <div class="row">
-              <div class="col-md-12 col-lg-3 col-xl-3 mb-4 mb-lg-0">
-                <div class="bg-image hover-zoom ripple rounded ripple-surface">
-                  <img src="{% static p.product_image.url %}"
-                    style="width: 100%; height:100%; overflow: hidden; object-fit: cover; border-radius: 25px;" />
-                  <a href="#!">
-                    <div class="hover-overlay">
-                      <div class="mask" style="background-color: rgba(253, 253, 253, 0.15);"></div>
-                    </div>
-                  </a>
-                </div>
-              </div>
-              <div class="col-md-6 col-lg-6 col-xl-6 px-5 caption">
-                <h5> {{p.name}}</h5>
-                <div class=" flex-row">
-                  <div class="text-danger mb-1 me-2">
-                    <i class="ri-star-s-fill "></i>
-                    <i class="ri-star-s-fill "></i>
-                    <i class="ri-star-s-fill "></i>
-                    <i class="ri-star-s-fill "></i>
-                  </div>
-
-                  <h3>₹ {{p.price}}</h3>
-                </div>
-                <div class="mt-1 mb-0 text-muted small">
-
-                </div>
-                <div class="mb-2 text-muted small">
-
-                </div>
-                <span class="para">
-                  {{p.description}}
-                </span>
-              </div>
-
-              <div class="col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start caption-btn ">
-                <div class=" flex-row align-items-center mb-1">
-                  <h5 class="disable"> {{p.name}}</h5>
-                  <h5 class="mb-1 me-1 disable">₹ {{p.price}}</h5>
-                  <div class="d-flex flex-row disable">
-                    <div class="text-danger mb-1 me-2">
-                      <i class="ri-star-s-fill disable"></i>
-                      <i class="ri-star-s-fill disable"></i>
-                      <i class="ri-star-s-fill disable"></i>
-                      <i class="ri-star-s-fill disable"></i>
-
-                    </div>
-                  </div>
-
-
-                  <button type="button" class="btn btn-success btn-md btn-green" style="border-radius: 100px;"> <a
-                      href="{% url 'add-to-cart' p.id  %}" style="text-decoration: none; color: white;">Add to cart <i
-                        class="ri-shopping-cart-2-fill"></i></a></button>
-
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-
-
-
-
-
-
-
-  <!-- card end -->
-  {% if forloop.counter|divisibleby:"3" %}
-
-
-
-
-
-
-
-  {% endif %}
-
-  {% endfor %}
-</section>
-
-
-<!-- products data enddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd -->
-{%else%}
-
-<h3 style="text-align:center; color:#3E454C;">No Search Found</h3>
-{%endif%}
-{% include "ecom/footer.html" %}
-
-<script>
-  {%if messages %}
-  {%for message in messages %}
-  alert('{{message}}');
-  {% endfor %}
-  {% endif %}
-</script>
-
-
-
-
-
-{% endblock content %} {% endcomment %}
-{% comment %} {% include 'ecom/navbar.html' %} {% endcomment %}
+{% comment %} {% extends 'ecom/customer_navbar.html' %}
 {% load static %}
 {% block content %}
 
@@ -458,6 +122,488 @@
   alert('{{ message }}');
   {% endfor %}
   {% endif %}
+</script>
+
+{% endblock content %}
+ {% endcomment %}
+
+ {% include 'ecom/customer_navbar.html' %}
+{% load static %}
+{% block content %}
+
+{% if products %}
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: white;
+  }
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	scroll-padding-top: 2rem;
+	scroll-behavior: smooth;
+}
+
+:root {
+	--main-color: #fd4646;
+	--text-color: #171427;
+	--bg-color: #fff;
+}
+
+body {
+	font-family: 'Poppins', sans-serif;
+	color: var(--text-color);
+	font-weight: 400;
+}
+
+ul,
+li {
+	list-style: none;
+}
+
+a {
+	text-decoration: none;
+}
+
+img {
+	width: 100%;
+}
+
+/* ==========  ==================== */
+
+.container {
+	max-width: 1068px;
+	margin: auto;
+	width: 100%;
+}
+
+section {
+	padding: 4rem 0 3rem;
+}
+
+/* ========== HEADER ==================== */
+.header {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	background-color: var(--bg-color);
+	box-shadow: 0 1px 4px hsl(0 4% 15% / 10%);
+	z-index: 100;
+}
+
+.nav {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 20px 0;
+}
+
+.logo {
+	font-size: 1.1rem;
+	color: var(--text-color);
+}
+
+#cart-icon {
+	font-size: 1.8rem;
+	cursor: pointer;
+}
+
+/* ========== CART ==================== */
+.cart {
+	position: fixed;
+	top: 0;
+	right: -100%;
+	width: 360px;
+	min-height: 100vh;
+	padding: 20px;
+	background-color: var(--bg-color);
+	box-shadow: -2px 0 4px hsl(0 4% 15% / 10%);
+	transition: right 0.3s;
+}
+
+.cart.active {
+	right: 0;
+}
+
+.cart-title {
+	font-size: 1.5rem;
+	font-weight: 600;
+	text-align: center;
+	margin-top: 2rem;
+}
+
+.cart-box {
+	display: grid;
+	grid-template-columns: 32% 50% 18%;
+	gap: 1rem;
+	align-items: center;
+	margin-top: 1rem;
+}
+
+.cart-img {
+	width: 100px;
+	height: 100px;
+	object-fit: contain;
+	padding: 10px;
+}
+
+.detail-box {
+	display: grid;
+	row-gap: 0.5rem;
+}
+
+.cart-product-title {
+	font-size: 1rem;
+	text-transform: uppercase;
+}
+
+.cart-price {
+	font-weight: 500;
+}
+
+.cart-quantity {
+	border: 1px solid var(--text-color);
+	outline-color: var(--main-color);
+	width: 2.4rem;
+	font-size: 1rem;
+	text-align: center;
+}
+
+.cart-remove {
+	font-size: 1.5rem;
+	color: var(--main-color);
+	cursor: pointer;
+}
+
+.total {
+	display: flex;
+	justify-content: flex-end;
+	margin-top: 1.5rem;
+	border-top: 1px solid var(--text-color);
+}
+
+.total-title {
+	font-size: 1rem;
+	font-weight: 600;
+}
+
+.total-price {
+	margin-left: 0.5rem;
+}
+
+.btn-buy {
+	display: flex;
+	margin: 1.5rem auto 0 auto;
+	padding: 12px 20px;
+	font-size: 1rem;
+	font-weight: 500;
+	border: none;
+	background-color: var(--main-color);
+	color: var(--bg-color);
+	cursor: pointer;
+	transition: background-color 0.3s;
+}
+
+.btn-buy:hover {
+	background-color: var(--text-color);
+}
+
+#close-cart {
+	position: absolute;
+	top: 1rem;
+	right: 0.8rem;
+	color: var(--text-color);
+	font-size: 2rem;
+	cursor: pointer;
+}
+
+
+.shop {
+	margin-top: 2rem;
+}
+
+.section-title {
+	font-size: 1.5rem;
+	font-weight: 600;
+	text-align: center;
+	margin-bottom: 1.5rem;
+}
+
+/* ========== SHOP CONTENT ==================== */
+.shop-content {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(220px, auto));
+	gap: 1.5rem;
+}
+
+.product-box {
+	position: relative;
+}
+
+.product-box:hover {
+	padding: 10px;
+	border: 1px solid var(--text-color);
+	transition: padding 0.4s;
+}
+
+.product-img {
+	width: 100%;
+	height: 300px;
+	margin-bottom: 0.5rem;
+  	object-fit: cover;
+}
+
+.product-title {
+	font-size: 1.1rem;
+	font-weight: 600;
+	text-transform: uppercase;
+	margin-bottom: 0.5rem;
+}
+
+.price {
+	font-weight: 500;
+}
+
+.add-cart {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	background-color: var(--text-color);
+	color: var(--bg-color);
+	padding: 10px;
+	cursor: pointer;
+	transition: background-color 0.3s;
+}
+
+.add-cart:hover {
+	background-color: rgba(23, 20, 39, 0.8);
+}
+
+/* ========== Breakpoints ==================== */
+@media (max-width: 1080px) {
+	.nav {
+		padding: 15px;
+	}
+
+	section {
+		padding: 3rem 0 2rem;
+	}
+
+	.container {
+		margin: 0 auto;
+		width: 90%;
+	}
+
+	.shop {
+		margin-top: 2rem !important;
+	}
+}
+
+@media (max-width: 400px) {
+	.nav {
+		padding: 11px;
+	}
+
+	.logo {
+		font-size: 1rem;
+	}
+
+	.cart {
+		width: 320px;
+	}
+}
+
+@media (max-width: 360px) {
+	.shop {
+		margin-top: 1rem !important;
+	}
+
+	.cart {
+		width: 280px;
+	}
+}
+</style>
+
+<h4 style="text-align:center; color:#3E454C;">{{ word }}</h4>
+
+
+<section class="shop container">
+  <h2 class="section-title">Shop Product</h2>
+
+  <div class="shop-content">
+    {% for p in products %}
+    
+    <div class="product-box">
+       <a href="{% url 'product detailes' p.id %}" style="text-decoration: none;">
+      <img src="{% static p.product_image.url %}" alt="{{ p.name }}" class="product-img">
+      <h2 class="product-title">{{ p.name }}</h2>
+      <span class="price">₹ {{ p.price }}</span>
+      <a href="{% url 'add-to-cart' p.id %}">
+      <i class='bx bx-shopping-bag add-cart'></i></a>
+    </div>
+{% endfor %}
+
+</section>
+
+{% else %}
+<h3 style="text-align:center; color:#3E454C;">No Search Found</h3>
+{% endif %}
+
+{% include "ecom/footer.html" %}
+<script>
+  {% if messages %}
+  {% for message in messages %}
+  alert('{{ message }}');
+  {% endfor %}
+  {% endif %}
+
+  // ==== CART ==================
+let cartIcon = document.querySelector('#cart-icon');
+let cart = document.querySelector('.cart');
+let closeCart = document.querySelector('#close-cart');
+
+// == Open cart
+cartIcon.onclick = () => {
+	cart.classList.add('active');
+};
+
+// == Close cart
+closeCart.onclick = () => {
+	cart.classList.remove('active');
+};
+
+// == Close Working JavaScript
+if (document.readyState == 'loading') {
+	document.addEventListener('DOMContentLoaded', ready);
+} else {
+	ready();
+};
+
+// == Making Function
+function ready() {
+	// Remove items from cart
+	var removeCartButtons = document.getElementsByClassName('cart-remove');
+	console.log(removeCartButtons);
+	for (var i = 0; i < removeCartButtons.length; i++) {
+		var button = removeCartButtons[i];
+		button.addEventListener('click', removeCartItem);
+	}
+	// == Quantity changes
+	var quantityInputs = document.getElementsByClassName('cart-quantity');
+	for (var i = 0; i < quantityInputs.length; i++) {
+		var input = quantityInputs[i];
+		input.addEventListener('change', quantityChanged);
+	}
+	// Add to cart
+	var addCart = document.getElementsByClassName('add-cart');
+	for (var i = 0; i < addCart.length; i++) {
+		var button = addCart[i];
+		button.addEventListener('click', addCartClicked);
+	}
+
+	// Buy button work
+	document.getElementsByClassName('btn-buy')[0]
+		.addEventListener('click', buyButtonClicked);
+};
+
+// Buy button
+function buyButtonClicked() {
+	alert('Your order is placed');
+	var cartContent = document.getElementsByClassName('cart-content')[0];
+	while (cartContent.hasChildNodes()) {
+		cartContent.removeChild(cartContent.firstChild);
+	}
+	updatetotal();
+};
+
+// == Remove items from cart
+function removeCartItem(event) {
+	var buttonClicked = event.target;
+	buttonClicked.parentElement.remove();
+	updatetotal();
+};
+
+// == Quantity changes
+function quantityChanged(event) {
+	var input = event.target;
+	if (isNaN(input.value) || input.value <= 0) {
+		input.value = 1;
+	}
+	updatetotal();
+};
+
+// Add to cart
+function addCartClicked(event) {
+	var button = event.target;
+	var shopProducts = button.parentElement;
+	var title = shopProducts.getElementsByClassName('product-title')[0].innerText;
+	var price = shopProducts.getElementsByClassName('price')[0].innerText;
+	var productImg = shopProducts.getElementsByClassName('product-img')[0].src;
+	addProductToCart(title, price, productImg);
+	updatetotal();
+};
+function addProductToCart(title, price, productImg) {
+	var cartShopBox = document.createElement('div');
+	cartShopBox.classList.add('cart-box');
+	var cartItems = document.getElementsByClassName('cart-content')[0];
+	var cartItemsNames = cartItems.getElementsByClassName('cart-product-title');
+	for (var i = 0; i < cartItemsNames.length; i++) {
+		if (cartItemsNames[i].innerText == title) {
+			alert('You have already add this item to cart');
+			return;
+		}
+	}
+
+	var cartBoxContent = `
+  <img src="${productImg}" alt="image" class="cart-img">
+		<div class="detail-box">
+			<div class="cart-product-title">${title}</div>
+			<div class="cart-price">${price}</div>
+			<input class="cart-quantity" type="number" value="1">
+		</div>
+	<i class='bx bxs-trash-alt cart-remove'></i>
+`;
+
+	cartShopBox.innerHTML = cartBoxContent
+	cartItems.append(cartShopBox);
+	cartShopBox.
+		getElementsByClassName('cart-remove')[0]
+		.addEventListener('click', removeCartItem);
+	cartShopBox
+		.getElementsByClassName('cart-quantity')[0]
+		.addEventListener('change', quantityChanged);
+};
+// == Uptade total
+function updatetotal() {
+	var cartContent = document.getElementsByClassName('cart-content')[0];
+	var cartBoxes = cartContent.getElementsByClassName('cart-box');
+	var total = 0;
+	for (var i = 0; i < cartBoxes.length; i++) {
+		var cartBox = cartBoxes[i];
+		var priceElement = cartBox.getElementsByClassName('cart-price')[0];
+		var quantityElement = cartBox.getElementsByClassName('cart-quantity')[0];
+		var price = parseFloat(priceElement.innerText.replace('$', ''));
+		var quantity = quantityElement.value;
+		total = total + (price * quantity);
+	}
+	// if price contain some cents value
+	total = Math.round(total * 100) / 100;
+
+	document.getElementsByClassName('total-price')[0].innerText = '$' + total;
+};
+
 </script>
 
 {% endblock content %}

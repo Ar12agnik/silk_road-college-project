@@ -58,7 +58,7 @@ def customer_signup_view(request):
             EMAIL_RECEIVING_USER = request.POST.get('email', None)
             if EMAIL_RECEIVING_USER is None:
                 print("Error!!")
-            message = ("Welcome to SreeGuruBhander We're excited to see you here!! check out our Latest offers click "
+            message = ("Welcome to Silk Road We're excited to see you here!! check out our Latest offers click "
                        "here(domain_name.com)\n please Do not reply to this mail!")
             send_mail("Greetings!" + str(name), message, settings.EMAIL_HOST_USER, [str(EMAIL_RECEIVING_USER)],
                       fail_silently=True)

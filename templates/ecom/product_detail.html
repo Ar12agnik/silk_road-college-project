@@ -1,4 +1,8 @@
-{% extends "ecom/homebase.html" %}
+{% if request.user.is_authenticated %}
+{% include "ecom/customer_navbar.html" %}
+{% else %}
+{% include "ecom/navbar.html" %}
+{% endif %}
 {% block content %}
 {% load static %}
 <div style="max-width: 1200px; margin: 20px auto; font-family: Arial, sans-serif; padding: 20px;">

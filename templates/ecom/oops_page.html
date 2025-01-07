@@ -1,4 +1,8 @@
-{% extends "ecom/homebase.html" %}
+{% if request.user.is_authenticated %}
+{% include "ecom/customer_navbar.html" %}
+{% else %}
+{% include "ecom/navbar.html" %}
+{% endif %}
 {% block content %}
 <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; font-family: Arial, sans-serif; background-color: #f8f9fa; color: #333; text-align: center;">
     <h1 style="font-size: 3rem; color: #dc3545;">Oops! We Messed Up.</h1>
