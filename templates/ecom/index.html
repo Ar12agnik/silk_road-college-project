@@ -638,7 +638,7 @@ section {
 
 
 <!-- Products Section -->
-<section class="section">
+{% comment %} <section class="section">
   <div class="container">
     <div class="row">
       {% for p in products %}
@@ -660,76 +660,23 @@ section {
       {% endfor %}
     </div>
   </div>
-</section>
+</section> {% endcomment %}
 
 <section class="shop container">
   <h2 class="section-title">Shop Product</h2>
 
   <div class="shop-content">
-    <!-- box 1 -->
+    {% for p in products %}
+    
     <div class="product-box">
-      <img src="https://adistore.by/wp-content/uploads/2022/06/8a31a58d20f4410683d3ac8200d45ec1_9366.png" alt="Aeroready shirt" class="product-img">
-      <h2 class="product-title">Aeroready shirt</h2>
-      <span class="price">$25</span>
-      <i class='bx bx-shopping-bag add-cart'></i>
+       <a href="{% url 'product detailes' p.id %}" style="text-decoration: none;">
+      <img src="{% static p.product_image.url %}" alt="{{ p.name }}" class="product-img">
+      <h2 class="product-title">{{ p.name }}</h2>
+      <span class="price">₹ {{ p.price }}</span>
+      <a href="{% url 'add-to-cart' p.id %}">
+      <i class='bx bx-shopping-bag add-cart'></i></a>
     </div>
-
-    <!-- box 2 -->
-    <div class="product-box">
-      <img src="https://i.bulavka.by/lots42/427431.webp" alt="Wireless earbud" class="product-img">
-      <h2 class="product-title">Wireless earbud</h2>
-      <span class="price">$55</span>
-      <i class='bx bx-shopping-bag add-cart'></i>
-    </div>
-
-    <!-- box 3 -->
-    <div class="product-box">
-      <img src="https://adistore.by/wp-content/uploads/2021/11/Shapka_s_pomponom_Adicolor_Collegiate_chernyj_H35510_01_standard-460x460.jpg" alt="Hooded parka" class="product-img">
-      <h2 class="product-title">Hooded parka</h2>
-      <span class="price">$125</span>
-      <i class='bx bx-shopping-bag add-cart'></i>
-    </div>
-
-    <!-- box 4 -->
-    <div class="product-box">
-      <img src="https://adilike.kiev.ua/image/cache/catalog/000000/GT6552-750x750.jpg" alt="Metal bottle" class="product-img">
-      <h2 class="product-title">Metal bottle</h2>
-      <span class="price">$45</span>
-      <i class='bx bx-shopping-bag add-cart'></i>
-    </div>
-
-    <!-- box 5 -->
-    <div class="product-box">
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-iwBEdpFuEk15oB-ggKj48LdazW86ZMlCSw&usqp=CAU" alt="silver metal" class="product-img">
-      <h2 class="product-title">silver metal</h2>
-      <span class="price">$90</span>
-      <i class='bx bx-shopping-bag add-cart'></i>
-    </div>
-
-    <!-- box 6 -->
-    <div class="product-box">
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9rzL2yGud0UE7UBdJ9jQMfPo6UFqf7fJ6MA&usqp=CAU" alt="Back hat" class="product-img">
-      <h2 class="product-title">Back hat</h2>
-      <span class="price">$225</span>
-      <i class='bx bx-shopping-bag add-cart'></i>
-    </div>
-
-    <!-- box 7 -->
-    <div class="product-box">
-      <img src="https://img4.goodfon.ru/wallpaper/nbig/7/a1/seksualnaia-rusaia-devushka-sidit-na-polu-v-chernom-poza-fig.jpg" alt="Backpack" class="product-img">
-      <h2 class="product-title">Backpack</h2>
-      <span class="price">$425</span>
-      <i class='bx bx-shopping-bag add-cart'></i>
-    </div>
-
-    <!-- box 8 -->
-    <div class="product-box">
-      <img src="https://damion.club/uploads/posts/2022-11/1669168398_damion-club-p-odezhda-dlya-sobak-adidas-pinterest-1.jpg" alt="Ultraboost 22" class="product-img">
-      <h2 class="product-title">Ultraboost 22</h2>
-      <span class="price">$90</span>
-      <i class='bx bx-shopping-bag add-cart'></i>
-    </div>
-  </div>
+{% endfor %}
 
 </section>
 
