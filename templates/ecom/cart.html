@@ -240,6 +240,11 @@
             background: #2368cf;
             text-decoration: none; /* Keeps underline removed on hover */
         }
+        .btn-checkout:disabled {
+            background: #ccc; /* Grey background for disabled state */
+            color: #666; /* Lighter text color */
+            cursor: not-allowed; /* Show not-allowed cursor */
+        }
     </style>
 </head>
 <div class="container cart-container">
@@ -277,7 +282,11 @@
         <h4>Cart Summary</h4>
         <p>Subtotal: ₹ {{ total }}</p>
         <h5>Total: ₹ {{ total }}</h5>
+        {% if total > 0 %}
         <a href="{% url 'customer-address' %}" class="btn-checkout">Proceed to Checkout</a>
+    {% else %}
+        <button class="btn-checkout" disabled>Proceed to Checkout</button>
+    {% endif %}
     </div>
 </div>
 <script>
