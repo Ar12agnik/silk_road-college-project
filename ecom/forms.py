@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from . import models
+from django.core.validators import RegexValidator
 
 
 class CustomerUserForm(forms.ModelForm):
@@ -25,8 +26,16 @@ class ProductForm(forms.ModelForm):
 #address of shipment
 class AddressForm(forms.Form):
     Email = forms.EmailField()
-    Mobile= forms.IntegerField()
-    Address = forms.CharField(widget=forms.Textarea,max_length=500)
+    Mobile = forms.CharField(
+        max_length=15, 
+        validators=[
+            RegexValidator(
+                regex=r'^\+?1?\d{9,15}$',
+                message="Enter a valid phone number (e.g., +1234567890, 1234567890)."
+            )
+        ]
+    )
+    Address = forms.CharField(widget=forms.Textarea, max_length=500)
 
 class FeedbackForm(forms.ModelForm):
     class Meta:
