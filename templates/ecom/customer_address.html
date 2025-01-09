@@ -16,20 +16,20 @@
   }
 
   a:hover {
-    color: #1E577C;
+    color: #3E7B27;
   }
 
   body {
     height: 100%;
     width: 100%;
-    background: linear-gradient(to bottom, #19547b, #ffd89b);
+    background: linear-gradient(to bottom, #3846de, #dc9c35);
     background-attachment: fixed;
   }
 
   .container1 {
     width: 40%;
     margin: 5% auto;
-    background-color: rgba(255, 255, 255, 0.9);
+    background-color: rgba(192, 255, 230, 0.9);
     padding: 2%;
     border-radius: 15px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
@@ -39,7 +39,7 @@
     text-align: center;
     font-size: 1.8rem;
     font-weight: 700;
-    color: #3C6880;
+    color: #0b5a34;
     margin-bottom: 20px;
   }
 
@@ -58,9 +58,10 @@
     font-weight: 600;
   }
 
-  input, textarea {
+  /* Specific sizes for each input field */
+  .email-field {
     width: 100%;
-    padding: 10px;
+    padding: 8px;
     border: 2px solid #ccc;
     border-radius: 5px;
     font-size: 1rem;
@@ -68,13 +69,46 @@
     background: rgba(255, 255, 255, 0.8);
   }
 
-  input:focus, textarea:focus {
-    border-color: #3C6880;
+  .email-field:focus {
+    border-color: #047526;
+    background: rgba(255, 255, 255, 1);
+  }
+
+  .mobile-field {
+    width: 100%;
+    padding: 8px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    outline: none;
+    background: rgba(255, 255, 255, 0.8);
+  }
+
+  .mobile-field:focus {
+    border-color: #047526;
+    background: rgba(255, 255, 255, 1);
+  }
+
+  .address-field {
+    width: 100%;
+    padding: 15px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    outline: none;
+    background: rgba(255, 255, 255, 0.8);
+    height: 150px; /* Height for multi-line input */
+    resize: vertical; /* Allow resizing for flexibility */
+    line-height: 1.5; /* Improve readability for multi-line text */
+  }
+
+  .address-field:focus {
+    border-color: #047526;
     background: rgba(255, 255, 255, 1);
   }
 
   input[type="submit"] {
-    background: #3C6880;
+    background: #59a947;
     color: white;
     font-size: 1.1rem;
     font-weight: 700;
@@ -86,7 +120,7 @@
   }
 
   input[type="submit"]:hover {
-    background: #1E577C;
+    background: #3E7B27;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   }
 
@@ -105,15 +139,15 @@
       <ul class="form-style-1">
         <li>
           <label>Email <span style="color:red;">*</span></label>
-          {% render_field addressForm.Email class="field-long" placeholder="Enter your email" %}
+          {% render_field addressForm.Email class="email-field" placeholder="Enter your email" %}
         </li>
         <li>
           <label>Mobile <span style="color:red;">*</span></label>
-          {% render_field addressForm.Mobile class="field-long" placeholder="Enter your mobile number" %}
+          {% render_field addressForm.Mobile class="mobile-field" placeholder="Enter your mobile number" %}
         </li>
         <li>
           <label>Shipment Address <span style="color:red;">*</span></label>
-          {% render_field addressForm.Address id="field5" class="field-long field-textarea" placeholder="Building Number, City, PIN Code" %}
+          {% render_field addressForm.Address id="field" class="address-field" placeholder="Enter your address (e.g., Building Number, City, PIN Code)" %}
         </li>
         <li>
           <input type="submit" value="Proceed To Pay">
