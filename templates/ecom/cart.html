@@ -1,705 +1,338 @@
+{% comment %} {% if request.user.is_authenticated %}
+    {% include "ecom/customer_navbar.html" %}
+{% else %}
+    {% include "ecom/navbar.html" %}
+{% endif %}
 {% load static %}
 {% block content %}
 
 <head>
-    <!-- Include Bootstrap CSS and JS -->
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css" rel="stylesheet" />
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
-
         body {
             margin: 0;
             padding: 0;
             font-family: 'Poppins', sans-serif;
-            width: 70%;
-            height: 60%;
             background-color: white;
-            -webkit-box-sizing: border-box;
             box-sizing: border-box;
         }
-        .cart-table-background{
-            background-image: linear-gradient(to top, #1ad809c7,#0faa01, #52f543);
+        .cart-table-background {
+            background-image: linear-gradient(to top, #1ad809c7, #0faa01, #52f543);
         }
-
-        /*root variable */
-
-        :root {
-            --backgroud: white;
-
-
-        }
-/*Jatin start*/
         .cart-table-container {
-        margin-bottom: 2.5rem;
-    }
-
-    .cart-table-container .input-group .form-control {
-        height: 25px;
-        border-color: rgba(0, 0, 0, 0.09);
-    }
-
-    .cart-table-container .btn-shop,
-    .cart-table-container .btn-sm {
-        border: none;
-        background-color: #f4f4f4;
-        color: #222529;
-    }
-
-    .cart-table-container .btn-shop:hover,
-    .cart-table-container .btn-sm:hover {
-        color: #fff;
-        background-color: #08c;
-    }
-
-    .table.table-cart tr td,
-    .table.table-cart tr th,
-    .table.table-wishlist tr td,
-    .table.table-wishlist tr th {
-        vertical-align: middle;
-    }
-
-    .table.table-cart tr th,
-    .table.table-wishlist tr th {
-        border: 0;
-        color: #222529;
-        font-weight: 500;
-        line-height: 2rem;
-        font-size: 14px;
-        text-transform: uppercase;
-    }
-
-    .table.table-cart tr td,
-    .table.table-wishlist tr td {
-        border-top: 1px solid #e7e7e7;
-    }
-
-    .table.table-cart tr td.product-col,
-    .table.table-wishlist tr td.product-col {
-        padding: 2rem 0.8rem 1.8rem 0;
-    }
-
-    .table.table-cart tr.product-action-row td,
-    .table.table-wishlist tr.product-action-row td {
-        padding: 0 0 2.2rem;
-        border: 0;
-    }
-
-    .table.table-cart .product-image-container,
-    .table.table-wishlist .product-image-container {
-        position: relative;
-        width: 8rem;
-        margin: 0;
-    }
-
-    .table.table-cart .product-title,
-    .table.table-wishlist .product-title {
-        margin-bottom: 0;
-        padding: 0;
-        font-family: "Open Sans", sans-serif;
-        font-weight: 400;
-        line-height: 1.75;
-        font-size: 16px;
-    }
-
-    .table.table-cart .product-title a,
-    .table.table-wishlist .product-title a {
-        color: inherit;
-        text-decoration: none;
-    }
-
-    .table.table-cart .subtotal-price,
-    .table.table-wishlist .subtotal-price {
-        color: #222529;
-        font-size: 1.6rem;
-        font-weight: 600;
-        font-size: 16px;
-    }
-
-    .table.table-cart .btn-remove,
-    .table.table-wishlist .btn-remove {
-        right: 15px;
-        font-size: 1.1rem;
-    }
-
-    .table.table-cart tfoot td,
-    .table.table-wishlist tfoot td {
-        padding: 2rem 0.8rem 1rem;
-    }
-
-    .table.table-cart tfoot .btn,
-    .table.table-wishlist tfoot .btn {
-        padding: 1.2rem 2.4rem 1.3rem 2.5rem;
-        font-size: 1.3rem;
-        font-weight: 700;
-        height: 43px;
-        letter-spacing: -0.018em;
-        font-size: 14px;
-        padding: 0px 25px;
-    }
-
-    .table.table-cart tfoot .btn+.btn,
-    .table.table-wishlist tfoot .btn+.btn {
-        margin-left: 1rem;
-    }
-
-    .table.table-cart .bootstrap-touchspin.input-group,
-    .table.table-wishlist .bootstrap-touchspin.input-group {
-        margin-right: auto;
-        margin-left: auto;
-    }
-
-    .table.table-cart .product-title a,
-    .table.table-cart .subtotal-price {
-        display: block;
-        margin-bottom: 1px;
-    }
-
-    .table-cart tr th {
-        padding: 1rem;
-    }
-
-    .table-cart tr th.thumbnail-col {
-        width: 16%;
-    }
-
-    .table-cart tr th.product-col {
-        width: 33%;
-    }
-
-    .table-cart tr th.price-col {
-        width: 14%;
-    }
-
-    .table-cart td {
-        padding: 1rem 1rem;
-    }
-
-    i.cart-empty {
-        font-size: 100px;
-        color: #d3d3d4;
-    }
-
-
-    .qty-col {
-        min-width: 98px;
-    }
-
-    tbody .product-col {
-        font-size: 0;
-    }
-
-    .product-col .product-image-container {
-        display: table-cell;
-        padding-right: 1.8rem;
-        margin-bottom: 0;
-        vertical-align: middle;
-    }
-
-    .product-col .product-image img {
-        border: 1px solid #ccc;
-    }
-
-    .product-col .product-title {
-        margin-bottom: 1px;
-        display: table-cell;
-        vertical-align: middle;
-    }
-
-    .cart-discount {
-        margin-bottom: 2rem;
-    }
-
-    .cart-discount h4 {
-        margin-bottom: 1.2rem;
-        font-size: 1.6rem;
-        font-weight: 400;
-    }
-
-    .cart-discount form {
-        max-width: 420px;
-    }
-
-    .cart-discount .input-group-append {
-        margin-left: 3px;
-    }
-
-    .cart-summary {
-        margin-bottom: 1.6rem;
-        padding: 1.5rem;
-        border: 1px solid #e7e7e7;
-        background: #fff;
-    }
-
-    .cart-summary h3 {
-        margin-bottom: 10px;
-        font-size: 16px;
-        letter-spacing: -0.01em;
-    }
-
-    .product-image img {
-        width: 100px;
-        height: 100px;
-    }
-
-    .quantity-wrapper {
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-    }
-
-    .quantity-wrapper label {
-        font-weight: 300;
-        color: #666666;
-        font-size: 15px;
-        margin-bottom: 0;
-    }
-
-    .quantity-wrapper .input-group {
-        width: 100px;
-        margin: 0 10px;
-    }
-
-    .quantity-wrapper input {
-        width: 35px !important;
-        pointer-events: none;
-        padding: 0;
-        border: 0;
-        text-align: center;
-        margin-left: auto !important;
-        position: initial !important;
-    }
-
-    .quantity-wrapper .input-group-btn {
-        border: 1px solid #d5d5d5;
-        border-radius: 50px !important;
-        display: flex;
-    }
-
-    .quantity-wrapper .btn {
-        padding: 0;
-        height: 28px;
-        width: 28px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        outline: none;
-        box-shadow: none;
-    }
-
-    .quantity-wrapper .bx {
-        font-size: 16px;
-    }
-
-    .promo-code-area h3 {
-        font-size: 16px;
-        font-weight: 400;
-        margin: 10px 0;
-    }
-
-    .apply-coupon-btn {
-        background-color: #4f1fff;
-        color: #fff;
-    }
-
-    .apply-coupon-btn:hover {
-        color: #fff;
-    }
-
-    .cart-discount input {
-        box-shadow: none !important;
-        outline: none !important;
-    }
-
-    .table-totals tfoot tr td:last-child {
-        text-align: right;
-    }
-
-    .checkout-methods {
-        text-align: center;
-    }
-
-    .btn-remove {
-        position: absolute;
-        top: -10px;
-        right: -8px;
-        width: 1.8rem;
-        height: 1.8rem;
-        border-radius: 50%;
-        color: #474747;
-        background-color: #fff;
-        box-shadow: 0 2px 6px 0 rgb(0 0 0 / 40%);
-        text-align: center;
-        line-height: 2rem;
-    }
-    .icon-cancel{
-        text-decoration: none;
-    }
-    .icon-cancel:before {
-        content: "";
-        font-family: "Font Awesome 5 Free";
-        font-weight: 700;
-    }
-        /*
-        h6 {
-            text-align: center;
-            color: white;
-            font-family: 'Poppins', sans-serif;
-            font-size: 1.8rem;
+            margin-bottom: 2.5rem;
         }
-
-        .main-box {
-            width: 90%;
-            height: 80%;
-            padding: auto;
+        .cart-table-container .btn-shop:hover,
+        .cart-table-container .btn-sm:hover {
+            color: #fff;
+            background-color: #08c;
         }
-
-        .table-box {
-            margin: 40px;
+        .table.table-cart th,
+        .table.table-cart td {
+            vertical-align: middle;
+            padding: 1rem;
         }
-
-        .del-btn {
-            font-size: 3rem;
-            color: rgb(174, 2, 2);
-            text-align: center;
+        .cart-summary {
+            padding: 1.5rem;
+            border: 1px solid #e7e7e7;
+            background: #fff;
         }
-
-        .total {
-            color: maroon;
-            font-size: 2rem;
-            font-weight: bolder;
+        .cart-summary h3 {
+            margin-bottom: 10px;
+            font-size: 16px;
         }
-
-        input[type="submit"] {
-            background-color: transparent;
-            border-radius: 5px;
-            border: none;
-            padding: 6px;
-            color: var(--text-color);
-            font-size: 15px;
-            font-weight: bolder;
-
+        .product-image img {
+            width: 100px;
+            height: 100px;
         }
-
-        /*Mobile responsiv*//*
+        .quantity-wrapper {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+        }
         @media only screen and (max-width:1000px) {
-            h6 {
-                font-size: 4rem;
-            }
-
-            .table-box {
-                margin: 0px;
-            }
-
-            table {
-                font-size: 2.2rem;
-
-            }
-
-            input[type="number"] {
-                width: 80%;
-                font-size: 4rem;
-            }
-
             .btn {
                 width: 40%;
-                padding: 20px;
-                font-size: 4rem;
-            }
-
-            .del-btn {
-                font-size: 5rem;
-
-            }
-
-            img {
-                width: 180px;
-                height: 180px;
-            }
-
-            .total {
-                font-size: 5rem;
-            }
-
-            input[type="submit"] {
-                background-color: rgb(241, 241, 9);
-                border-radius: 5px;
-                border: none;
-                padding: 6px;
-                color: var(--text-color);
-                font-size: 15px;
-                font-weight: bolder;
-                margin-top: 10px;
-                width: 80%;
                 font-size: 2.5rem;
-                padding: 10px;
-
-
             }
-
-
-        }*/
+        }
     </style>
 </head>
 <div class="main-box">
-    
-    /*jatin start*/
     <section>
         <div class="container">
             <div class="row">
-                <div class="col-sm-12 col-md-12">
+                <div class="col-md-12">
                     <div class="row cart-wrapper">
-                        <div class="col-sm-8 col-md-8">
+                        <div class="col-md-8">
                             <div class="cart-table-container">
                                 <table class="table table-cart">
                                     <thead>
                                         <tr>
-                                            <th class="thumbnail-col"></th>
-                                            <th class="product-col">Product</th>
-                                            <th class="price-col">Price</th>
-                                            <th class="qty-col">Quantity</th>
-                                            <th class="text-right">Subtotal</th>
+                                            <th>Thumbnail</th>
+                                            <th>Product</th>
+                                            <th>Price</th>
+                                            <th>Quantity</th>
+                                            <th>Subtotal</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr class="product-row">
-                                            <td>
-                                                <figure class="product-image-container">
-                                                    <a href="#!" class="product-image">
-                                                        <img src="https://saaslandwp.com/demo/wp-content/uploads/2018/12/14-480x480.jpg"
-                                                            alt="product">
-                                                    </a>
-    
-                                                    <a href="#" class="btn-remove icon-cancel" title="Remove Product"></a>
-                                                </figure>
-                                            </td>
-                                            <td class="product-col">
-                                                <h5 class="product-title">
-                                                    <a href="product.html">Men Watch</a>
-                                                </h5>
-                                            </td>
-                                            <td></td>
-                    /*jatin end part*/
-                                            <td>
-                                                <div class="quantity-wrapper">
-                                                    <div class="input-group">
-                                                        <span class="input-group-btn">
-                                                            <button type="button" class="btn btn-default btn-number">
-                                                                <span class="fa fa-minus"></span>
-                                                            </button>
-                                                        </span>
-                                                        <input type="text" name="quant[1]" class="form-control input-number"
-                                                            value="8" min="8" max="30">
-                                                        <span class="input-group-btn">
-                                                            <button type="button" class="btn btn-default btn-number">
-                                                                <span class="fa fa-plus"></span>
-                                                            </button>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="text-right"><span class="subtotal-price">$17.90</span></td>
-                                        </tr>
-    
-                                        <tr class="product-row">
-                                            <td>
-                                                <figure class="product-image-container">
-                                                    <a href="#!" class="product-image">
-                                                        <img src="https://saaslandwp.com/demo/wp-content/uploads/2018/12/10-480x480.jpg"
-                                                            alt="product">
-                                                    </a>
-    
-                                                    <a href="#" class="btn-remove icon-cancel" title="Remove Product"></a>
-                                                </figure>
-                                            </td>
-                                            <td class="product-col">
-                                                <h5 class="product-title">
-                                                    <a href="product.html">Men Watch</a>
-                                                </h5>
-                                            </td>
-                                            <td>$17.90</td>
-                                            <td>
-                                                <div class="quantity-wrapper">
-                                                    <div class="input-group">
-                                                        <span class="input-group-btn">
-                                                            <button type="button" class="btn btn-default btn-number">
-                                                                <span class="fa fa-minus"></span>
-                                                            </button>
-                                                        </span>
-                                                        <input type="text" name="quant[1]" class="form-control input-number"
-                                                            value="8" min="8" max="30">
-                                                        <span class="input-group-btn">
-                                                            <button type="button" class="btn btn-default btn-number">
-                                                                <span class="fa fa-plus"></span>
-                                                            </button>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="text-right"><span class="subtotal-price">$17.90</span></td>
-                                        </tr>
-    
-                                        <tr class="product-row">
-                                            <td>
-                                                <figure class="product-image-container">
-                                                    <a href="#!" class="product-image">
-                                                        <img src="https://saaslandwp.com/demo/wp-content/uploads/2018/12/11-480x480.jpg"
-                                                            alt="product">
-                                                    </a>
-    
-                                                    <a href="#" class="btn-remove icon-cancel" title="Remove Product"></a>
-                                                </figure>
-                                            </td>
-                                            <td class="product-col">
-                                                <h5 class="product-title">
-                                                    <a href="product.html">Men Watch</a>
-                                                </h5>
-                                            </td>
-                                            <td>$17.90</td>
-                                            <td>
-                                                <div class="quantity-wrapper">
-                                                    <div class="input-group">
-                                                        <span class="input-group-btn">
-                                                            <button type="button" class="btn btn-default btn-number">
-                                                                <span class="fa fa-minus"></span>
-                                                            </button>
-                                                        </span>
-                                                        <input type="text" name="quant[1]" class="form-control input-number"
-                                                            value="8" min="8" max="30">
-                                                        <span class="input-group-btn">
-                                                            <button type="button" class="btn btn-default btn-number">
-                                                                <span class="fa fa-plus"></span>
-                                                            </button>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="text-right"><span class="subtotal-price">$17.90</span></td>
-                                        </tr>
+                                        {% for p in products %}
+                                            {% for q in quantity %}
+                                                {% if p and p.id == q.id %}
+                                                    <tr class="product-row">
+                                                        <td>
+                                                            <figure>
+                                                                <img src="{% static p.product_image.url %}" alt="product">
+                                                            </figure>
+                                                        </td>
+                                                        <td>{{ p.name }}</td>
+                                                        <td>₹ {{ p.price }}</td>
+                                                        <td>
+                                                            <form method="post" action="{% url 'cart' %}">
+                                                                {% csrf_token %}
+                                                                <input type="hidden" name="pid" value="{{ p.id }}">
+                                                                <input type="number" name="quantity" value="{{ q.quantity }}" min="1" max="100">
+                                                                <input type="submit" value="Update">
+                                                            </form>
+                                                        </td>
+                                                        <td>₹ {{ p.price }}</td>
+                                                    </tr>
+                                                {% endif %}
+                                            {% endfor %}
+                                        {% endfor %}
                                     </tbody>
                                 </table>
                             </div>
                         </div>
-                        <div class="col-sm-4 col-md-4">
+                        <div class="col-md-4">
                             <div class="cart-summary">
-                                <h3>CART TOTALS</h3>
-    
-                                <table class="table table-totals">
-                                    <tbody>
-                                        <tr>
-                                            <td>Subtotal</td>
-                                            <td>$17.90</td>
-                                        </tr>
-    
-    
-                                        
-                                                     
-                                                    </form>
-                                                </div>
-    
-    
-                                                <button type="submit" class="btn btn-shop btn-update-total">
-                                                    Update Totals
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-    
-                                    <tfoot>
-                                        <tr>
-                                            <td>Other charges</td>
-                                            <td>$17.90</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Delivery charges</td>
-                                            <td>$17.90</td>
-                                        </tr>
-                                        <tr>
-                                            <td><b>Total</b></td>
-                                            <td><b>$17.90</b></td>
-                                        </tr>
-                                    </tfoot>
+                                <h3>Cart Totals</h3>
+                                <table>
+                                    <tr>
+                                        <td>Subtotal</td>
+                                        <td>₹ {{ total }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Total</strong></td>
+                                        <td><strong>₹ {{ total }}</strong></td>
+                                    </tr>
                                 </table>
-    
-                                <div class="checkout-methods">
-                                    <a href="#!" class="btn btn-block btn-dark">Proceed to Checkout
-                                        <i class="fa fa-arrow-right"></i></a>
+                                <div>
+                                    <a href="{% url 'customer-address' %}" class="btn btn-success">Proceed to Checkout</a>
                                 </div>
-                            </div><!-- End .cart-summary -->
+                            </div>
                         </div>
                     </div>
-    
                 </div>
             </div>
         </div>
     </section>
-        
-    <div class="table-box">
-        <div class="panel"
-            style=" box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;">
-            <div class="panel-heading cart-table-background">
-                <h6>My
-                    Cart
-                    <i class="ri-shopping-cart-2-fill"></i>
-                </h6>
-            </div>
-            <table class="table table-hover table-bordered" id="dev-table">
-                <thead>
-                    <tr>
-                        <th>Image</th>
-                        <th>Name</th>
-                        <th>Quantity</th>
-                        <th>Price</th>
-                        <th>Description</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                {% for p in products %}
-                {% for q in quantity %}
+</div>
+{% endblock content %} {% endcomment %}
+
+{% if request.user.is_authenticated %}
+    {% include "ecom/customer_navbar.html" %}
+{% else %}
+    {% include "ecom/navbar.html" %}
+{% endif %}
+{% load static %}
+{% block content %}
+{% load custom_filters %}
+
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f1f3f6;
+            margin: 0;
+            padding: 0;
+        }
+        .cart-container {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 20px;
+            gap: 20px;
+        }
+        .cart-items {
+            flex: 2;
+            background: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .cart-summary {
+            flex: 1;
+            position: sticky;
+            top: 20px;
+            background: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .cart-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #e9ecef;
+            padding-bottom: 10px;
+        }
+        .cart-item img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+        .cart-item-info {
+            margin-left: 20px;
+            flex: 1;
+        }
+        .cart-item-info h5 {
+            margin: 0;
+            font-size: 16px;
+            color: #333;
+        }
+        .cart-item-info p {
+            margin: 5px 0;
+            font-size: 14px;
+            color: #666;
+        }
+        .quantity-wrapper {
+            display: flex;
+            align-items: center;
+        }
+        .quantity-wrapper button {
+            width: 30px;
+            height: 30px;
+            border: none;
+            background: #e9ecef;
+            color: #333;
+            font-size: 16px;
+            border-radius: 50%;
+        }
+        .quantity-wrapper input {
+            width: 40px;
+            text-align: center;
+            border: 1px solid #e9ecef;
+            margin: 0 10px;
+            border-radius: 4px;
+        }
+        .btn-checkout {
+            width: 100%;
+            background: #2874f0;
+            color: #fff;
+            font-weight: bold;
+            border: none;
+            padding: 10px;
+            border-radius: 4px;
+            text-decoration: none; /* Removes underline */
+            display: inline-block; /* Ensures button-like appearance */
+            text-align: center; /* Centers text */
+        }
+        .btn-checkout:hover {
+            background: #2368cf;
+            text-decoration: none; /* Keeps underline removed on hover */
+        }
+    </style>
+</head>
+<div class="container cart-container">
+    <!-- Cart Items Section -->
+    <div class="cart-items">
+        <h4>Your Cart</h4>
+        {% for p in products %}
+            {% for q in quantity %}
                 {% if p and p.id == q.id %}
-                <tr>
-                    <td>{{ p.name }}</td>
-                    <td>
-                        <img src="{% static p.product_image.url %}" alt="Profile Pic" height="50px" width="50px" />
-                    </td>
-                    <td>₹ {{ p.price }}</td>
-                    <td>
-                        <form method="post" action="{% url 'cart' %}">
-                            {% csrf_token %}
-                            <input type="hidden" name="pid" value="{{ p.id }}">
-                            <input type="number" name="quantity" id="qty" value="{{ q.quantity }}"
-                                style="border: none; background-color: rgba(221, 221, 221, 0.632);padding: 2px; text-align: center; border-radius: 5px;">
-                            <input type="submit" value="Update">
-                        </form>
-                    </td>
-                    <td>{{ p.description }}</td>
-                    <td>
-                        <a class="del-btn" href="{% url 'remove-from-cart' p.id %}">
-                            <span class="glyphicon glyphicon-trash"></span>
-                        </a>
-                    </td>
-                </tr>
+                    <div class="cart-item">
+                        <img src="{% static p.product_image.url %}" alt="Product Image">
+                        <div class="cart-item-info">
+                            <h5>{{ p.name }}</h5>
+                            <p>Price: ₹ {{ p.price }}</p>
+                            <div class="quantity-wrapper">
+                                <form method="post" action="{% url 'cart' %}">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="pid" value="{{ p.id }}">
+                                    <button type="button" class="btn-decrease">-</button>
+                                    <input type="number" name="quantity" value="{{ q.quantity }}" min="1" max="100">
+                                    <button type="button" class="btn-increase">+</button>
+                                    {% comment %} <input type="submit" value="Update" class="btn btn-sm btn-primary"> {% endcomment %}
+                                </form>
+                            </div>
+                        </div>
+                        <p>Subtotal: ₹ {{ p.price|multiply:q.quantity }}</p>
+                    </div>
                 {% endif %}
-                {% endfor %}
-                {% endfor %}
-            </table>
-        </div>
+            {% endfor %}
+        {% endfor %}
     </div>
 
-
-
-    <br><br><br>
-    <div style="text-align: center;">
-        <span style="" class="total">Total ₹ {{ total }}</span>
-        <br> <br>
-        <a href="/customer-address">
-            <button class="btn btn-success btn-lg"><span>Purchase <i class="ri-shopping-bag-fill"></i></span></button>
-        </a>
+    <!-- Cart Summary Section -->
+    <div class="cart-summary">
+        <h4>Cart Summary</h4>
+        <p>Subtotal: ₹ {{ total }}</p>
+        <h5>Total: ₹ {{ total }}</h5>
+        <a href="{% url 'customer-address' %}" class="btn-checkout">Proceed to Checkout</a>
     </div>
 </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Get all quantity buttons
+        const decreaseButtons = document.querySelectorAll(".btn-decrease");
+        const increaseButtons = document.querySelectorAll(".btn-increase");
+
+        // Decrease Quantity and Submit Form or Remove Item
+        decreaseButtons.forEach((btn) => {
+            btn.addEventListener("click", function () {
+                const input = this.nextElementSibling;
+                const form = this.closest("form");
+                const productId = form.querySelector('input[name="pid"]').value;
+                const currentValue = parseInt(input.value) || 1;
+
+                if (currentValue > 1) {
+                    input.value = currentValue - 1;
+                    form.submit(); // Submit the form
+                } else {
+                    // Quantity is 0; send request to remove from cart
+                    const url = `/remove-from-cart/${productId}`;
+                    fetch(url, { 
+                        method: "POST", 
+                        headers: { "X-CSRFToken": "{{ csrf_token }}" } 
+                    })
+                    .then((response) => {
+                        if (response.ok) {
+                            // Reload the page after successful removal
+                            window.location.reload();
+                        } else {
+                            console.error("Failed to remove item from cart.");
+                        }
+                    })
+                    .catch((error) => console.error("Error:", error));
+                }
+            });
+        });
+
+        // Increase Quantity and Submit Form
+        increaseButtons.forEach((btn) => {
+            btn.addEventListener("click", function () {
+                const input = this.previousElementSibling;
+                const form = this.closest("form");
+                const currentValue = parseInt(input.value) || 1;
+
+                if (currentValue < parseInt(input.max)) {
+                    input.value = currentValue + 1;
+                    form.submit(); // Submit the form
+                }
+            });
+        });
+    });
+</script>
+
 
 
 
