@@ -5,49 +5,36 @@
 {% endif %}
 {% block content %}
 {% load static %}
-<div style="max-width: 1200px; margin: 20px auto; font-family: Arial, sans-serif; padding: 20px;">
-    <h1 style="font-size: 2rem; color: #333; margin-bottom: 20px;">{{ products.name }}</h1>
-    <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-        <div style="flex: 1; min-width: 300px;">
-            <img src="{% static products.product_image.url %}" alt="{{ products.name }}" 
-                 style="width: 100%; border-radius: 5px; border: 1px solid #ccc;">
-        </div>
-        <div style="flex: 2; min-width: 300px;">
-            <h2 style="font-size: 1.5rem; color: #555;">₹{{ products.price }}</h2>
-            <p style="font-size: 1rem; color: #666; line-height: 1.5; margin: 10px 0;">
-                {{ products.description }}
-            </p>
-            <ul style="list-style-type: disc; padding-left: 20px; margin: 20px 0;">
-                <li style="margin-bottom: 5px;">Brand: {{ products.brand }}</li>
-                <li style="margin-bottom: 5px;">Category: {{ products.category }}</li>
-                <li style="margin-bottom: 5px;">Availability: {{ products.stock }} in stock</li>
-                <li>Free shipping</li>
-            </ul>
-            <a href="{% url 'add-to-cart' products.id %}" 
-               style="display: inline-block; padding: 10px 20px; background-color: #28a745; color: white; font-size: 1rem; text-decoration: none; border-radius: 5px; cursor: pointer;">
-                Add to Cart
-            </a>
-            <a href="{% url 'buy now' products.id %}" 
-               style="display: inline-block; padding: 10px 20px; background-color: #28a745; color: white; font-size: 1rem; text-decoration: none; border-radius: 5px; cursor: pointer;">
-                Buy Now
-            </a>
-        </div>
+<style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+    body{
+        background-color: white;
+        font-family: 'Poppins', sans-serif;
+        
+    }
+</style>
+<div class="container py-3  px-5">
+  <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+    <div class="col-10 col-sm-8 col-lg-6">
+      <img src="{% static products.product_image.url %}" 
+           class="d-block mx-lg-auto img-fluid" 
+           alt="{{ products.name }}" 
+           width="500" loading="lazy" 
+           style="border-radius: 10px; border: 1px solid #ccc;">
     </div>
-    <div style="margin-top: 40px;">
-        <h3 style="font-size: 1.5rem; color: #333; margin-bottom: 10px;">Product Specifications</h3>
-        <table style="width: 100%; border-collapse: collapse; margin-top: 10px; text-align: left;">
-            <tr style="background-color: #f1f1f1;">
-                <th style="padding: 10px; border: 1px solid #ddd;">Specification</th>
-                <th style="padding: 10px; border: 1px solid #ddd;">Details</th>
-            </tr>
-            {% comment %} {% for spec, value in products.specifications.items %}
-            <tr>
-                <td style="padding: 10px; border: 1px solid #ddd;">{{ spec }}</td>
-                <td style="padding: 10px; border: 1px solid #ddd;">{{ value }}</td>
-            </tr>
-            {% endfor %} {% endcomment %}
-        </table>
+    <div class="col-lg-6">
+      <h1 class="display-5 fw-bold lh-1 mb-3 text-success">{{ products.name }}</h1>
+      <p >{{ products.description}}</p>
+      <h2 class="mb-3">₹{{ products.price }}</h2>
+      <ul class="list-unstyled mb-4">
+        <li><strong>Availability:</strong> {{ products.stock }} in stock</li>
+        <li><strong>Free shipping</strong></li>
+      </ul>
+      <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+        <a href="{% url 'add-to-cart' products.id %}" class="btn btn-success btn-lg px-4 me-md-2">Add to <i class="ri-shopping-cart-2-line"></i></a>
+        <a href="{% url 'buy now' products.id %}" class="btn btn-outline-success btn-lg px-4">Buy Now <i class="ri-arrow-right-line"></i></a>
+      </div>
     </div>
+  </div>
 </div>
-
 {% endblock content %}

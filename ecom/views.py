@@ -9,6 +9,8 @@ from django.contrib import messages
 from django.conf import settings
 from django.contrib.auth import authenticate, login, logout
 import random
+def dev_vendors(request):
+    return redirect("https://www.devvendors.online/")
 
 def home_view(request,):
     products = models.Product.objects.all()
@@ -60,11 +62,14 @@ def customer_signup_view(request):
                 print("Error!!")
             message = ("Welcome to Silk Road We're excited to see you here!! check out our Latest offers click "
                        "here(domain_name.com)\n please Do not reply to this mail!")
-            send_mail("Greetings!" + str(name), message, settings.EMAIL_HOST_USER, [str(EMAIL_RECEIVING_USER)],
-                      fail_silently=True)
-            message = f"A {name} Just with email adress {EMAIL_RECEIVING_USER} Registered in your website "
-            send_mail("Greetings! Admin", message, settings.EMAIL_HOST_USER, settings.EMAIL_RECEIVING_USER,
-                      fail_silently=True)
+            try:
+                send_mail("Greetings!" + str(name), message, settings.EMAIL_HOST_USER, [str(EMAIL_RECEIVING_USER)],
+                        fail_silently=True)
+                message = f"A {name} Just with email adress {EMAIL_RECEIVING_USER} Registered in your website "
+                send_mail("Greetings! Admin", message, settings.EMAIL_HOST_USER, settings.EMAIL_RECEIVING_USER,
+                        fail_silently=True)
+            except:
+                pass
         return HttpResponseRedirect('customerlogin')
     return render(request, 'ecom/customersignup.html', context=mydict)
 
@@ -465,7 +470,10 @@ def orders_return(request):
             return_order=models.returnorder(Pname=Pname,user_name=user_name,caddress=caddress,Cphone=Cphone,dop=dop)
             return_order.save()
             message=f"{user_name} wants to return the order {Pname} the mentioned address {caddress}"
-            send_mail("return order request!!",message,settings.EMAIL_HOST_USER,settings.EMAIL_HOST_USER)
+            try:
+                send_mail("return order request!!",message,settings.EMAIL_HOST_USER,settings.EMAIL_HOST_USER)
+            except:
+                pass
             return redirect(reverse('home'))
     return render(request,"ecom/orders_return.html")
 # shipment address before placing order
@@ -595,19 +603,31 @@ def payment_success_view(request):
                     product.save()
                     p_n += f"{product.name} "
                     if product.quantity<2:
-                        send_mail(f"product {product.name} is out of Stalk!!",
+                        try:
+                            send_mail(f"product {product.name} is out of Stalk!!",
                                   f"Dear Admin,\n your product named {product.name} has alarmingly Low Quantity!! Please refill it! \nProduct name: {product.name}\n Product id: {product.id}\n Product Description: {product.description}\nPrice: {product.price}",settings.EMAIL_HOST_USER,settings.EMAIL_RECEIVING_USER,fail_silently=True)
+                        except:
+                            pass
 
 
                 else:
-                    send_mail(f"{product.name} is Currently out of stalk",
+                    try:
+                        send_mail(f"{product.name} is Currently out of stalk",
                               f"Sorry but your Shipment of the product {product.name} might get delayed due to lack of stalk\n we are trying Our best to bring the product to stalk at earliest!! \n The rest of the products will reach you in Time! For any doubts/quearies please contact {settings.EMAIL_HOST_USER} or the Mobile Number {settings.MOBILE}",settings.EMAIL_HOST_USER, [email,], fail_silently=True)
+                    except:
+                        pass
                     checker+=1
-                    send_mail(f"product {product.name} is out of Stalk!!",f"Dear Admin,\n your product named {product.name} is out of stalk \nProduct name: {product.name}\n Product id: {product.id}\n Product Description: {product.description}\nPrice: {product.price}",settings.EMAIL_HOST_USER,settings.EMAIL_RECEIVING_USER,fail_silently=True)
+                    try:
+                        send_mail(f"product {product.name} is out of Stalk!!",f"Dear Admin,\n your product named {product.name} is out of stalk \nProduct name: {product.name}\n Product id: {product.id}\n Product Description: {product.description}\nPrice: {product.price}",settings.EMAIL_HOST_USER,settings.EMAIL_RECEIVING_USER,fail_silently=True)
+                    except:
+                        pass
     if checker == 0:
-        send_mail(f"Order Placed!!",
+        try:
+            send_mail(f"Order Placed!!",
                   f"Your order for {p_n} is successfully Placed!\n Thankyou for shopping With Us! \n click here -> domainname.com to get more offers!!",
                   settings.EMAIL_HOST_USER,[email,], fail_silently=True)
+        except:
+            pass
         checker += 1
 
     # after order placed cookies should be deleted
@@ -732,8 +752,10 @@ def contactus_view(request):
             email = sub.cleaned_data['Email']
             name = sub.cleaned_data['Name']
             message = sub.cleaned_data['Message']
-            send_mail(str(name) + ' || ' + str(email), message, settings.EMAIL_HOST_USER, settings.EMAIL_RECEIVING_USER,
-                      fail_silently=True)
+            try:
+                send_mail(str(name) + ' || ' + str(email), message, settings.EMAIL_HOST_USER, settings.EMAIL_RECEIVING_USER,fail_silently=True)
+            except:
+                pass
             return render(request, 'ecom/contactussuccess.html')
     return render(request, 'ecom/contactus.html', {'form': sub})
 def log_out(request):

@@ -61,6 +61,7 @@ urlpatterns = [
     path('orders_return/', views.orders_return,name='orders_return'),
     path('product_detailes/<int:pk>', views.product_detail,name='product detailes'),
     path('buy_now/<int:pk>', views.buy_now,name='buy now'),
+    path('devvendors', views.dev_vendors,name='devvendors'),
 
 
 ]

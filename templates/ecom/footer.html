@@ -2,89 +2,103 @@
 <html>
 
 <head>
-
-
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
-
   <style>
-    /*---------------------------------------
-   Social section
------------------------------------------*/
     @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
     body {
       margin: 0;
       padding: 0;
       font-family: 'Poppins', sans-serif;
-      width: 100%;
-      height: 100%;
       background-color: white;
-      -webkit-box-sizing: border-box;
       box-sizing: border-box;
     }
 
     footer {
-      padding: 0px 0px 0px 0px;
-      background-color: whitesmoke;
-      margin: 0px;
-      color: black;
-
+      padding: 20px 0;
+      background-color: #f8f9fa;
+      border-top: 1px solid #e9ecef;
+      color: #343a40;
     }
 
-
-
-
-    p {
+    footer .social-icons {
       text-align: center;
-      margin-bottom: 0px;
+      margin-bottom: 15px;
+    }
 
+    footer .social-icons a {
+      text-decoration: none;
+      margin: 0 10px;
+      font-size: 1.8rem;
+      color: #6c757d;
+      transition: color 0.3s ease;
     }
-    /*Mobile Responsive*/
-    @media only screen and (max-width:1000px){
-      .i{
-        font-size:3rem;
+
+    footer .social-icons a:hover {
+      color: #495057;
+    }
+
+    footer .footer-logo {
+      display: block;
+      margin: 0 auto;
+      width: 120px;
+    }
+
+    footer .footer-content {
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    footer .footer-content a {
+      text-decoration: none;
+      color: #198754;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+
+    footer .footer-content a:hover {
+      color: #145e41;
+    }
+
+    footer .footer-content span {
+      display: block;
+      margin-top: 10px;
+      font-size: 1rem;
+      color: #6c757d;
+    }
+
+    @media (max-width: 768px) {
+      .social-icons a {
+        font-size: 1.5rem;
       }
-    }
-    .footer-logo{
-      width: 40%; /* Set the width of the image */
-      vertical-align: middle; /* Set the height of the image */
-      
-      
+
+      footer .footer-logo {
+        width: 90px;
+      }
+
+      footer .footer-content span {
+        font-size: 0.9rem;
+      }
     }
   </style>
 </head>
 
-<footer>
-  {% load static %}
-  <br>
-
-  <p>
-    <a href="#" style="text-decoration: none; color: purple; font-size: 2rem;"><i class="ri-instagram-line i"></i></a>
-    <a href="#" style="text-decoration: none; color: blue; font-size: 2rem;"><i class="ri-facebook-circle-fill i"></i></a>
-    <a href="#" style="text-decoration: none; color: red; font-size: 2rem;"><i class="ri-youtube-fill i"></i></a>
-    <a href="#" style="text-decoration: none; color: skyblue; font-size: 2rem;"><i class="ri-twitter-fill i"></i></a>
-  </p>
-
-  <div class="container">
-    <div class="row">
-      <div class="col-md-12 col-sm-12 my-4">
-        <div style="color:#ffffff;" class="wow fadeInUp footer-copyright">
-          <p><Span><a href="{%url 'home' %}" style="text-decoration: none; color: black;"><img src="{% static 'images/logo.png' %}" class="footer-logo" alt=""></a></Span><br>
-            <span style="color: black; font-size: 1.2rem;"> &reg; 2024 Developed By <a href="www.devvendors.online"
-                target="_blank" style="text-decoration: none; color: green;">Dread Pirate Roberts</a></span><br>
-            <span style="color: black; font-size: 1rem;"></span>
-        </div>
-
-        <span style="font-size: 1.4rem; text-align: center;"></span>
-
-        </p>
-      </div>
+<body>
+  <footer>
+    {% load static %}
+    <div class="social-icons">
+      <a href="#"><i class="ri-instagram-line"></i></a>
+      <a href="#"><i class="ri-facebook-circle-fill"></i></a>
+      <a href="#"><i class="ri-youtube-fill"></i></a>
+      <a href="#"><i class="ri-twitter-fill"></i></a>
     </div>
-  </div>
-  </div>
-</footer>
-<!--
-developed By : Jatin Kundu
--->
+    <div class="footer-content">
+      <a href="{% url 'home' %}">
+        <img src="{% static 'images/logo.png' %}" alt="Logo" class="footer-logo">
+      </a>
+      <span>&reg; 2024 Developed By <a href="devvendors" target="_blank">Dread Pirate Roberts</a></span>
+    </div>
+  </footer>
+</body>
 
 </html>

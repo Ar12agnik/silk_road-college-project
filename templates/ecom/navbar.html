@@ -16,7 +16,6 @@
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Poppins', sans-serif;
             width: 100%;
             height: 100%;
             background-color: rgb(228, 246, 249);
@@ -29,7 +28,7 @@
         
         }
         .navbar{
-            background-image: linear-gradient(#18181b,#3f3f46);
+            background-image: linear-gradient(rgba(121, 121, 121, 0.641), white);
         }
 
         /*Mobile Responsive*/
@@ -56,8 +55,7 @@
             <div class="collapse navbar-collapse nav" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active text-success" aria-current="page" href="{%url 'home' %}"><i
-                                class="ri-home-8-line"></i> Home</a>
+                        <a class="nav-link active text-success" aria-current="page" href="{%url 'home' %}"><i class="ri-store-2-line"></i> Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-success " href="#" disabled>Orders return <i class="ri-arrow-right-up-line"></i></a>
@@ -85,11 +83,26 @@
                         <a class="nav-link text-success" href="/cart" aria-disabled="true"><i class="ri-shopping-cart-2-line"></i>  {{ product_count_in_cart }}</a>
                     </li>
                 </ul>
+        
                 <form class="d-flex my-1 mb-0" role="search" action="/search" get="get">
-                    <input class="form-control rounded-0 me-0" type="search" placeholder="Search Products"
-                        aria-label="Search" name="query" id="query">
-                    <button class="btn rounded-0 text-light" type="submit" style="background-image: linear-gradient(to top, #14532d,#047857);"><i class="ri-search-line"></i></button>
-                </form>
+                    <input 
+                      class="form-control" 
+                      style="background: #f8f9fa; border: 1px solid gray; border-radius: 50px; padding: 10px; font-size: 0.9rem; color: #495057;" 
+                      type="search" 
+                      placeholder="Search Products" 
+                      aria-label="Search" 
+                      name="query" 
+                      id="query"
+                    > &nbsp;
+                    <button 
+                      class="btn rounded-circle text-light" 
+                      type="submit" 
+                      style="background-color: #198754; border: none; padding: 10px 15px; font-size: 0.9rem; transition: background-color 0.3s ease;"
+                    >
+                      <i class="ri-search-line"></i>
+                    </button>
+                  </form>
+                  
             </div>
         </div>
     </nav>
