@@ -1,4 +1,4 @@
-{% extends 'ecom/customer_navbar.html' %}
+{% extends 'ecom/navbar.html' %}
 {% load static %}
 {% load widget_tweaks %}
 {% block content %}
@@ -16,23 +16,18 @@
   }
 
   a:hover {
-    color: #3E7B27;
-  }
-
-  body {
-    height: 100%;
-    width: 100%;
-    background: linear-gradient(to bottom, #3846de, #dc9c35);
-    background-attachment: fixed;
+    color: #fbfffa;
   }
 
   .container1 {
     width: 40%;
     margin: 5% auto;
-    background-color: rgba(192, 255, 230, 0.9);
+    background-color: rgba(232, 232, 232, 0.9);
     padding: 2%;
     border-radius: 15px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(#ffffff,#e5e5e5);
+    box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 1px, rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 4px 4px, rgba(0, 0, 0, 0.07) 0px 8px 8px, rgba(0, 0, 0, 0.07) 0px 16px 16px;
   }
 
   .form-heading {
@@ -121,7 +116,7 @@
 
   input[type="submit"]:hover {
     background: #3E7B27;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    
   }
 
   @media (max-width: 768px) {

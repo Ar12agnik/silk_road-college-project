@@ -251,6 +251,7 @@
     <!-- Cart Items Section -->
     <div class="cart-items">
         <h4>Your Cart</h4>
+        {% if total > 0 %}
         {% for p in products %}
             {% for q in quantity %}
                 {% if p and p.id == q.id %}
@@ -275,6 +276,13 @@
                 {% endif %}
             {% endfor %}
         {% endfor %}
+    {% else %}
+    <center><img src="{% static 'images/cart.png' %}" alt=""></center>
+    <h2 style="color: rgb(134, 134, 134); font-weight: bold; text-align: center; margin-bottom: 15px;">
+            Your cart is empty!
+    </h2>
+        
+    {% endif %}
     </div>
 
     <!-- Cart Summary Section -->
@@ -286,9 +294,9 @@
         <a href="{% url 'customer-address' %}" class="btn-checkout">Proceed to Checkout</a>
     {% else %}
         <p style="color: red; font-weight: bold; text-align: center; margin-bottom: 15px;">
-            ADD ITEMS TO CART FIRST
+            Add Items To Cart!!
         </p>
-        <button class="btn-checkout" disabled>Proceed to Checkout</button>
+        <a href="{% url 'home' %}" class="btn-checkout">Shop Now</a>
     {% endif %}
     </div>
 </div>
