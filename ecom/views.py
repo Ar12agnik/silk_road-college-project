@@ -280,13 +280,21 @@ def search_view(request):
 
 
 #show product discription
-def product_detail(request,pk):
+def product_detail(request, pk):
     try:
-        product= Product.objects.get(id=pk)
-        return render(request,'ecom/product_detail.html',{'products':product})
+        if 'product_ids' in request.COOKIES:
+            product_ids = request.COOKIES['product_ids']
+            counter = product_ids.split('|')
+            product_count_in_cart = len(set(counter))
+        else:
+            product_count_in_cart = 1
+
+        product = Product.objects.get(id=pk)
+        return render(request, 'ecom/product_detail.html', {'products': product,'product_count_in_cart': product_count_in_cart})
+
     except Exception as e:
         print(e)
-        return render(request,'ecom/oops_page.html')
+        return render(request, 'ecom/oops_page.html')
         
 # any one can add product to cart, no need of signin
 def add_to_cart_view(request, pk):
@@ -295,14 +303,16 @@ def add_to_cart_view(request, pk):
     # for cart counter, fetching products ids added by customer from cookies
     if 'product_ids' in request.COOKIES:
         product_ids = request.COOKIES['product_ids']
+        
 
         counter = product_ids.split('|')
         product_count_in_cart = len(set(counter))
     else:
         product_count_in_cart = 1
-
+    
+    message="Added to cart successfully!!"
     response = render(request, 'ecom/index.html',
-                      {'products': products, 'product_count_in_cart': product_count_in_cart})
+                      {'products': products, 'product_count_in_cart': product_count_in_cart,"message":message})
 
     # adding product id to cookies
     if 'product_ids' in request.COOKIES:
@@ -327,8 +337,6 @@ def add_to_cart_view(request, pk):
         response.set_cookie('product_ids', pk)
         response.set_cookie("quantity", quantity)
 
-    # product = models.Product.objects.get(id=pk)
-    # messages.info(request, product.name + ' added to cart successfully!')
 
     return response
 

@@ -99,6 +99,17 @@ a:hover{
 
 
 <section class="container-fluid px-4 py-4">
+	
+	{% if message %}
+		
+	
+		
+	<div class="alert alert-success alert-dismissible fade show" role="alert">
+		{{ message }}
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		</button>
+	</div>
+	{% endif %}
   <div class="shop-content">
     {% for p in products %}
     
@@ -120,11 +131,7 @@ a:hover{
 
 {% include "ecom/footer.html" %}
 <script>
-  {% if messages %}
-  {% for message in messages %}
-  alert('{{ message }}');
-  {% endfor %}
-  {% endif %}
+
 
 
 </script>
