@@ -258,7 +258,7 @@
             {% endfor %}
         {% endfor %}
     {% else %}
-    <center><img src="{% static 'images/cart.png' %}" alt=""></center>
+    <center><img src="{% static 'images/cart.png' %}" alt="" width="400"></center>
     <h2 style="color: rgb(134, 134, 134); font-weight: bold; text-align: center; margin-bottom: 15px;">
             Your cart is empty!
     </h2>
@@ -277,8 +277,8 @@
     {% else %}
         <p style="color: red; font-weight: bold; text-align: center; margin-bottom: 15px;">
             Add Items To Cart!!
-        </p>
-        <a href="{% url 'home' %}" class="btn-checkout">Shop Now</a>
+        </p> <br> <br>
+        <a href="{% url 'home' %}" class="btn btn-outline-success">Shop Now <i class="ri-shopping-bag-line"></i></a>
     {% endif %}
     </div>
 </div>

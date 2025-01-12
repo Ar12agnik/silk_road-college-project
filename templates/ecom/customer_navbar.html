@@ -55,8 +55,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active text-success" aria-current="page" href="{%url 'home' %}"><i
-                                class="ri-account-circle-fill"></i>{{request.user}}</a>
+                        <a class="nav-link active text-success" aria-current="page" href="{%url 'home' %}"><i class="ri-user-6-line"></i> {{request.user}}</a>
                     </li>
                     <li class="nav-item ">
                         <a class="nav-link text-success" href="/orders_return">Orders return <i class="ri-arrow-right-up-line"></i></a>
@@ -134,8 +133,7 @@
             <div class="return-orders">
                 <span><a href="/my-order" style="text-decoration: none;"><i class="ri-run-line"></i>Track Orders
                     </a></span>
-                <span> <a href="/my-profile" style="text-decoration: none;"><i
-                            class="ri-account-circle-fill"></i>{{request.user}}</a></span>
+                <span> <a href="/my-profile" style="text-decoration: none;"><i class="ri-user-6-line"></i> {{request.user}}</a></span>
             </div>
 
             <div class="login-signin">

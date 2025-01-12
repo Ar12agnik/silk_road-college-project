@@ -1,6 +1,9 @@
-<!DOCTYPE html>
-{% load widget_tweaks %}
-<html lang="en" dir="ltr">
+{% if request.user.is_authenticated %}
+    {% include "ecom/customer_navbar.html" %}
+{% else %}
+    {% include "ecom/navbar.html" %}
+{% endif %}
+{% block content %}
 
 <head>
     <meta charset="utf-8">
@@ -16,7 +19,7 @@
             width: 100%;
             height: 100%;
             background-color: rgb(255, 255, 255);
-            /* background: linear-gradient(to right, #b92b27, #1565c0) */
+            
         }
 
         /*root variable*/
@@ -149,7 +152,8 @@
 </head>
 
 <body>
-    {% include "ecom/navbar.html" %}
+    {% load widget_tweaks %}
+
 
     <form class="box" method="post">
         {% csrf_token %}
@@ -162,8 +166,8 @@
 
     </form>
 
-
-    <!-- {% include "ecom/footer.html" %} 
+    {% endblock content %}
+    <!-- {% include "ecom/footer.html" %} -->
 </body>
 
 </html>
