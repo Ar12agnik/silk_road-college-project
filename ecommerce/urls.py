@@ -1,11 +1,3 @@
-"""
-
-Developed By : sumit kumar
-facebook : fb.com/sumit.luv
-Youtube :youtube.com/lazycoders
-
-
-"""
 from django.contrib import admin
 from django.urls import path
 from ecom import views
@@ -61,6 +53,7 @@ urlpatterns = [
     path('orders_return/', views.orders_return,name='orders_return'),
     path('product_detailes/<int:pk>', views.product_detail,name='product detailes'),
     path('buy_now/<int:pk>', views.buy_now,name='buy now'),
+    path('submit_review/', views.submit_review,name='submit_review'),
     path('devvendors', views.dev_vendors,name='devvendors'),
 
 

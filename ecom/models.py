@@ -24,16 +24,41 @@ class Customer(models.Model):
         return self.user.first_name
 
 
+# class Product(models.Model):
+#     name = models.CharField(max_length=40)
+#     product_image = models.ImageField(upload_to="product_image/", null=True, blank=True)
+#     price = models.PositiveIntegerField()
+#     description = models.CharField(max_length=4000)
+#     quantity = models.IntegerField(default=1)
+#     category = models.CharField(max_length=1000,default="None")
+#     @property
+#     def avg_raiting(self):
+#         reviews = self.review_set.all()
+#         if reviews.exists():
+#             return round(sum(review.raiting for review in reviews) / reviews.count(), 2)
+#         return 0  # Default value if no reviews exist
+
+#     def __str__(self):
+#         return self.name
 class Product(models.Model):
     name = models.CharField(max_length=40)
     product_image = models.ImageField(upload_to="product_image/", null=True, blank=True)
     price = models.PositiveIntegerField()
     description = models.CharField(max_length=4000)
     quantity = models.IntegerField(default=1)
+    category = models.CharField(max_length=1000, default="None")
+    avg_raiting = models.FloatField(default=0.0)  # New field to store average rating
+
+    def update_avg_raiting(self):
+        reviews = self.review_set.all()
+        if reviews.exists():
+            self.avg_raiting = round(sum(review.raiting for review in reviews) / reviews.count(), 2)
+        else:
+            self.avg_raiting = 0.0
+        self.save()  # Save the updated rating to the database
 
     def __str__(self):
         return self.name
-
 
 class Orders(models.Model):
     STATUS = (
@@ -73,3 +98,20 @@ class returnorder(models.Model):
     Cphone=models.CharField(max_length=20)
     dop=models.DateField()
     user_name=models.CharField(max_length=100)
+class review(models.Model):
+    Product = models.ForeignKey("Product", on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    raiting = models.IntegerField()
+    comments = models.CharField(max_length=5000, default=None)
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)  # Save the review first
+        self.Product.update_avg_raiting()  # Update product's average rating
+
+    def delete(self, *args, **kwargs):
+        product = self.Product
+        super().delete(*args, **kwargs)  # Delete the review first
+        product.update_avg_raiting()  # Update product's average rating after deletion
+    def __str__(self):
+        return "review for "+self.Product.name+" by "+self.user.username
+    

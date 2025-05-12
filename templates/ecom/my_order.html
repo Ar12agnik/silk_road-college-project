@@ -203,9 +203,11 @@
 <div class="main-box">
     <div class="box">
         <header class="card-header" style="text-align:center; font-size: 21px"> My Orders / Tracking </header>
-
+        
         {% for products,order in data %}
-
+        <script>
+            
+        </script>
 
 
         <article class="card">
@@ -213,7 +215,21 @@
                 <ul class="row" style="margin-left:20px;margin-top:20px;">
                     <li class="col-md-4">
                         <figure class="itemside mb-3">
-                            {%for product in products%}
+
+                            
+                            
+                            {% for  product,review in products %}
+                            
+                        
+                            
+                            
+
+                            
+
+                            
+                            
+                            
+                            
                             <div class="aside"><img src="{% static product.product_image.url %}" class="img-md border"
                                     width="200px" height="200px">
                             </div>
@@ -247,22 +263,82 @@
                             {%endif%}
 
 
-                        </p>
+                        </p><br>
+                        
 
 
 
                     </li>
                     <li class="col-md-4">
                         <div class="col"> <strong>Shipment Address</strong> <br> {{order.address}}</div>
+                         {% if review is none %}
+                        <div class="container mt-4">
+                            <form id="reviewForm" method="post" action='{% url "submit_review" %}'>
+                                {% csrf_token %} 
+                                <!-- Hidden Fields -->
+                                <input type="hidden" id="username" name="username" value="{{request.user}}">
+                                <input type="hidden" id="product" name="product" value="{{product.id}}">
+                                
+                                <!-- Star Rating -->
+                                <div class="mb-3">
+                                    <label class="form-label">Rate the product:</label>
+                                    <div id="starRating" class="d-flex gap-1">
+                                        <i class="bi bi-star-fill star" data-value="1"></i>
+                                        <i class="bi bi-star-fill star" data-value="2"></i>
+                                        <i class="bi bi-star-fill star" data-value="3"></i>
+                                        <i class="bi bi-star-fill star" data-value="4"></i>
+                                        <i class="bi bi-star-fill star" data-value="5"></i>
+                                    </div>
+                                    <input type="hidden" name="rating" id="rating" value="">
+                                </div>
+                                
+                                <!-- Comments Field -->
+                                <div class="mb-3">
+                                    <label for="comments" class="form-label">Comments:</label>
+                                    <textarea class="form-control" id="comments" name="comments" rows="3"></textarea>
+                                </div>
+                                
+                                <!-- Submit Button -->
+                                <button type="submit" class="btn btn-primary">Submit Review</button>
+                            </form>
+                        </div>
+                        {% else %}
+                        <h1 class="text-success text-center py-5">Review submitted Successfully</h1>
+                        {%endif%} 
+                        
+                        <script>
+                            document.addEventListener("DOMContentLoaded", function () {
+                                const stars = document.querySelectorAll(".star");
+                                const ratingInput = document.getElementById("rating");
+                                
+                                stars.forEach(star => {
+                                    star.addEventListener("click", function () {
+                                        let value = this.getAttribute("data-value");
+                                        ratingInput.value = value;
+                                        
+                                        stars.forEach(s => s.classList.remove("text-warning"));
+                                        for (let i = 0; i < value; i++) {
+                                            stars[i].classList.add("text-warning");
+                                        }
+                                    });
+                                });
+                            });
+                        </script>
+                        
                     </li>
                     <li class="col-md-4">
                         <br>
                         <h4><a style="text-decoration:none;"
-                                href="{% url 'download-invoice' order.id product.id  %}"><button
+                                href="{% url 'download-invoice' order.id  product.id  %}"><button
                                     class="btn btn-danger btn-sm ">Download Invoice <i
                                         class="ri-download-2-line"></i></button></a></h4>
-                    </li>
+                    </li> 
+
                     {%endfor%}
+                    
+                    
+                   
+                    
                 </ul>
                 <hr>
 

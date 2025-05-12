@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from . import forms, models
-from .models import Product
+from .models import Product ,review
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.core.mail import send_mail
 from django.contrib.auth.models import Group, User
@@ -290,7 +290,9 @@ def product_detail(request, pk):
             product_count_in_cart = 1
 
         product = Product.objects.get(id=pk)
-        return render(request, 'ecom/product_detail.html', {'products': product,'product_count_in_cart': product_count_in_cart})
+        related = Product.objects.filter(category=product.category).exclude(id=product.id)
+        print(related)
+        return render(request, 'ecom/product_detail.html', {'products': product,'product_count_in_cart': product_count_in_cart,'related':related})
 
     except Exception as e:
         print(e)
@@ -649,17 +651,84 @@ def payment_success_view(request):
 
 @login_required(login_url='customerlogin')
 @user_passes_test(is_customer)
+# def my_order_view(request):
+#     customer = models.Customer.objects.get(user_id=request.user.id)
+#     orders = models.Orders.objects.all().filter(customer_id=customer)
+#     ordered_products = []
+#     for order in orders:
+#         ordered_product = models.Product.objects.all().filter(id=order.product.id)
+#         reviews = review.objects.all().filter(user=request.user.id,Product=order.product.id)
+#         if reviews.exists():
+#             temp=(ordered_product,review)
+#         else:
+#             temp = (ordered_product,None)
+        
+#         ordered_products.append(temp)
+#     print(ordered_products)
+#     return render(request, 'ecom/my_order.html', {'data': zip(ordered_products, orders)})
+
+
 def my_order_view(request):
+    # Get the customer instance
     customer = models.Customer.objects.get(user_id=request.user.id)
-    orders = models.Orders.objects.all().filter(customer_id=customer)
+
+    # Get orders for this customer
+    orders = models.Orders.objects.filter(customer_id=customer)
+
     ordered_products = []
     for order in orders:
-        ordered_product = models.Product.objects.all().filter(id=order.product.id)
-        ordered_products.append(ordered_product)
+        # Get the product associated with the order
+        ordered_product = order.product
 
-    return render(request, 'ecom/my_order.html', {'data': zip(ordered_products, orders)})
+        # Get the review for the current product by the logged-in user
+        reviews = models.review.objects.filter(user=request.user, Product=ordered_product.id)
 
 
+        # Add ordered product and review to the list
+        if reviews.exists():
+            print("Exist!!")
+        else:
+            reviews=None
+        orderd_prods=[ordered_product]
+        review = [reviews]
+        x=zip(orderd_prods,review)
+        print(x)
+        # Append the product-review pair to the list
+        ordered_products.append(x)
+
+    # Ensure the ordered_products and orders have the same length
+    if len(ordered_products) != len(orders):
+        raise ValueError("The number of orders and ordered products do not match.")
+
+    # Zip the orders and ordered_products together and pass to the template
+    data=zip(ordered_products, orders)
+    return render(request, 'ecom/my_order.html', context={'data':data })
+
+def submit_review(request):
+    if request.method == 'POST':
+        product_id = request.POST.get("product")
+        if not product_id:
+            return HttpResponseBadRequest("Product ID is required.")
+
+        product = get_object_or_404(Product, id=int(product_id))  # Ensures product exists
+
+        user = request.user
+        stars = request.POST.get("rating")
+        comments = request.POST.get("comments")
+
+        # Correct the field names to match the Review model
+        review_obj, created = review.objects.get_or_create(
+            Product=product,  # Ensure correct casing
+            user=user,
+            defaults={"raiting": stars, "comments": comments},  # Use defaults for optional updates
+        )
+
+        if not created:  # If review already exists, update it
+            review_obj.raiting = stars  # Corrected 'rating' field
+            review_obj.comments = comments
+            review_obj.save()
+
+    return redirect("my-order")
 # @login_required(login_url='customerlogin')
 # @user_passes_test(is_customer)
 # def my_order_view2(request):

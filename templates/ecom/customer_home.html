@@ -118,8 +118,10 @@ a:hover{
       <img src="{% static p.product_image.url %}" alt="{{ p.name }}" class="product-img">
       <h2 class="product-title">{{ p.name }}</h2>
       <span class="price">₹ {{ p.price }}</span>
-      <a href="{% url 'add-to-cart' p.id %}">
-      <i class='bx bx-shopping-bag add-cart'></i></a>
+	  <div class="d-flex">
+		<div class="ms-auto">{{p.avg_raiting}}</div>&nbsp;<i class="bi bi-star-fill star text-warning" data-value="1"></i>
+	</div>
+
     </div>
 {% endfor %}
 
