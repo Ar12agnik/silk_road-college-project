@@ -218,7 +218,7 @@
 
                             
                             
-                            {% for  product,review in products %}
+                             {% for  product,review in products %}
                             
                         
                             
@@ -271,7 +271,7 @@
                     </li>
                     <li class="col-md-4">
                         <div class="col"> <strong>Shipment Address</strong> <br> {{order.address}}</div>
-                         {% if review is none %}
+                         {% comment %} {% if review is none %}
                         <div class="container mt-4">
                             <form id="reviewForm" method="post" action='{% url "submit_review" %}'>
                                 {% csrf_token %} 
@@ -282,7 +282,7 @@
                                 <!-- Star Rating -->
                                 <div class="mb-3">
                                     <label class="form-label">Rate the product:</label>
-                                    <div id="starRating" class="d-flex gap-1">
+                                    <div id="starRating-{{ forloop.counter }}" class="d-flex gap-1">
                                         <i class="bi bi-star-fill star" data-value="1"></i>
                                         <i class="bi bi-star-fill star" data-value="2"></i>
                                         <i class="bi bi-star-fill star" data-value="3"></i>
@@ -304,9 +304,42 @@
                         </div>
                         {% else %}
                         <h1 class="text-success text-center py-5">Review submitted Successfully</h1>
-                        {%endif%} 
-                        
-                        <script>
+                        {%endif%}  {% endcomment %}
+                        {% if review is none %}
+                        <div class="container mt-4">
+                          <form class="review-form" method="post" action="{% url 'submit_review' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="username" value="{{ request.user }}">
+                            <input type="hidden" name="product"  value="{{ product.id }}">
+                  
+                            <!-- Star Rating (styling unchanged!) -->
+                            <div class="mb-3 star-rating-widget">
+                              <label class="form-label">Rate the product:</label>
+                              <div class="d-flex gap-1 stars">
+                                {% for _ in "12345" %}
+                                  <i class="bi bi-star-fill star" data-value="{{ forloop.counter }}"></i>
+                                {% endfor %}
+                              </div>
+                              <input type="hidden" name="rating" class="rating-input" value="">
+                            </div>
+                  
+                            <div class="mb-3">
+                              <label for="comments-{{ product.id }}" class="form-label">Comments:</label>
+                              <textarea class="form-control"
+                                        id="comments-{{ product.id }}"
+                                        name="comments"
+                                        rows="3"></textarea>
+                            </div>
+                  
+                            <button type="submit" class="btn btn-primary">Submit Review</button>
+                          </form>
+                        </div>
+                      {% else %}
+                        <h1 class="text-success text-center py-5">
+                          Review submitted Successfully
+                        </h1>
+                      {% endif %}
+                        {% comment %} <script>
                             document.addEventListener("DOMContentLoaded", function () {
                                 const stars = document.querySelectorAll(".star");
                                 const ratingInput = document.getElementById("rating");
@@ -323,7 +356,7 @@
                                     });
                                 });
                             });
-                        </script>
+                        </script> {% endcomment %}
                         
                     </li>
                     <li class="col-md-4">
@@ -334,7 +367,112 @@
                                         class="ri-download-2-line"></i></button></a></h4>
                     </li> 
 
-                    {%endfor%}
+                    {%endfor%} 
+                    {% comment %} {% for product, review in products %}
+                    <li class="col-md-4">
+                      <div class="aside">
+                        <img src="{% static product.product_image.url %}"
+                             class="img-md border"
+                             width="200px"
+                             height="200px">
+                      </div>
+                  
+                      <p><strong>Product Name</strong><br>{{ product.name }}</p>
+                      <p><strong>Price</strong><br>₹{{ product.price }}</p>
+                  
+                      <p><strong>Status</strong><br>
+                        {% if order.status == 'Pending' %}
+                          <span class="label btn-warning px-2 py-1" style="font-size:12px;">
+                            {{ order.status }}
+                          </span>
+                        {% elif order.status == 'Delivered' %}
+                          <span class="label btn-success" style="font-size:12px;">
+                            {{ order.status }}
+                          </span>
+                        {% elif order.status == 'Out for Delivery' %}
+                          <span class="label btn-default" style="font-size:12px;">
+                            {{ order.status }}
+                          </span>
+                        {% else %}
+                          <span class="label btn-primary" style="font-size:12px;">
+                            {{ order.status }}
+                          </span>
+                        {% endif %}
+                      </p>
+                  
+                      <div class="col">
+                        <strong>Shipment Address</strong><br>{{ order.address }}
+                      </div>
+                  
+                      {% if review is none %}
+                        <div class="container mt-4">
+                          <form class="review-form" method="post" action="{% url 'submit_review' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="username" value="{{ request.user }}">
+                            <input type="hidden" name="product"  value="{{ product.id }}">
+                  
+                            <!-- Star Rating (styling unchanged!) -->
+                            <div class="mb-3 star-rating-widget">
+                              <label class="form-label">Rate the product:</label>
+                              <div class="d-flex gap-1 stars">
+                                {% for _ in "12345" %}
+                                  <i class="bi bi-star-fill star" data-value="{{ forloop.counter }}"></i>
+                                {% endfor %}
+                              </div>
+                              <input type="hidden" name="rating" class="rating-input" value="">
+                            </div>
+                  
+                            <div class="mb-3">
+                              <label for="comments-{{ product.id }}" class="form-label">Comments:</label>
+                              <textarea class="form-control"
+                                        id="comments-{{ product.id }}"
+                                        name="comments"
+                                        rows="3"></textarea>
+                            </div>
+                  
+                            <button type="submit" class="btn btn-primary">Submit Review</button>
+                          </form>
+                        </div>
+                      {% else %}
+                        <h1 class="text-success text-center py-5">
+                          Review submitted Successfully
+                        </h1>
+                      {% endif %}
+                  
+                      <br>
+                      <h4>
+                        <a style="text-decoration:none;"
+                           href="{% url 'download-invoice' order.id product.id %}">
+                          <button class="btn btn-danger btn-sm">
+                            Download Invoice <i class="ri-download-2-line"></i>
+                          </button>
+                        </a>
+                      </h4>
+                    </li>
+                  {% endfor %} {% endcomment %}
+                  
+                  <script>
+                  document.addEventListener("DOMContentLoaded", () => {
+                    document.querySelectorAll(".star-rating-widget").forEach(widget => {
+                      const stars = widget.querySelectorAll(".star");
+                      const input = widget.querySelector(".rating-input");
+                  
+                      stars.forEach(star => {
+                        star.addEventListener("click", () => {
+                          const val = Number(star.dataset.value);
+                          input.value = val;
+                  
+                          stars.forEach(s => {
+                            s.classList.toggle("text-warning",
+                                               Number(s.dataset.value) <= val);
+                          });
+                        });
+                      });
+                    });
+                  });
+                  </script>
+                  
+
                     
                     
                    
