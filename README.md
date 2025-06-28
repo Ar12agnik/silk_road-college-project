@@ -43,6 +43,13 @@
         <sub>@vivekkanu125</sub>
       </a>
     </td>
+    <td align="center">
+      <a href="https://github.com/Deo030">
+        <img src="https://github.com/Deo030.png" width="80" height="80" style="border-radius:50%;" alt="Jeet Shaekar Deo"/><br/>
+        <b>Jeet Shaekar Deo</b><br/>
+        <sub>@Deo030</sub>
+      </a>
+    </td>
   </tr>
 </table>
 
