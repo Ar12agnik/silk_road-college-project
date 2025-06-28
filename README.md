@@ -6,7 +6,7 @@
 ---
 
 ## 👥 Contributors
-- [@Ar12agnik](https://github.com/Ar12agnik)**Agnik Roy** 
+- [**Agnik Roy**] (https://github.com/Ar12agnik)
 - **Ayanabha Chatterjee** (`BWU/BCA/22/411`)
 - **Vivek Kanu** (`BWU/BCA/22/403`)
 - **Jeet Shekar Deo** (`BWU/BCA/22/395`)
